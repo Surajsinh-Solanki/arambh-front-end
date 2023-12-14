@@ -1,0 +1,284 @@
+<div>
+  <h2 class="container mt-3">Add product</h2>
+  <form
+    [formGroup]="productForm"
+    (ngSubmit)="addProduct()"
+    class="container mt-3"
+  >
+    <div>
+      <label for="name" class="form-label">Name:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        formControlName="name"
+        class="form-control"
+        required
+      />
+      <div
+        *ngIf="
+          productForm.get('name')?.invalid && productForm.get('name')?.touched
+        "
+        class="error-message"
+      >
+        <span class="error-message">Name is required.</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="description" class="form-label">Description:</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        class="form-control"
+        required
+      ></textarea>
+      <div
+        *ngIf="
+          productForm.get('description')?.invalid &&
+          productForm.get('description')?.touched
+        "
+        class="error-message"
+      >
+        <span class="error-message">Description is required.</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="category" class="form-label">Category:</label>
+      <input
+        type="text"
+        id="category"
+        formControlName="category"
+        class="form-control"
+        required
+      />
+      <div
+        *ngIf="
+          productForm.get('category')?.invalid &&
+          productForm.get('category')?.touched
+        "
+        class="error-message"
+      >
+        <span class="error-message">Category is required.</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="price" class="form-label">Price:</label>
+      <input
+        type="number"
+        id="price"
+        formControlName="price"
+        class="form-control"
+        required
+      />
+      <div
+        *ngIf="
+          productForm.get('price')?.invalid && productForm.get('price')?.touched
+        "
+        class="error-message"
+      >
+        <span class="error-message"
+          >Price is required and must be a valid number.</span
+        >
+      </div>
+    </div>
+
+    <div>
+      <label for="mrp" class="form-label">MRP:</label>
+      <input
+        type="number"
+        id="mrp"
+        formControlName="mrp"
+        class="form-control"
+        required
+      />
+      <div
+        *ngIf="
+          productForm.get('mpr')?.invalid && productForm.get('mrp')?.touched
+        "
+        class="error-message"
+      >
+        <span class="error-message"
+          >MRP is required and must be a valid number.</span
+        >
+      </div>
+    </div>
+
+    <div>
+      <label for="gst" class="form-label">GST:</label>
+      <input
+        type="number"
+        id="gst"
+        formControlName="gst"
+        class="form-control"
+        required
+      />
+      <div
+        *ngIf="
+          productForm.get('gst')?.invalid && productForm.get('gst')?.touched
+        "
+        class="error-message"
+      >
+        <span class="error-message"
+          >GST is required and must be a valid number.</span
+        >
+      </div>
+    </div>
+
+    <div>
+      <label for="brand" class="form-label">Brand:</label>
+      <input
+        type="text"
+        id="brand"
+        formControlName="brand"
+        class="form-control"
+        required
+      />
+      <div
+        *ngIf="
+          productForm.get('brand')?.invalid && productForm.get('brand')?.touched
+        "
+        class="error-message"
+      >
+        <span class="error-message">Brand is required.</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="color" class="form-label">Color:</label>
+      <input
+        type="color"
+        id="color"
+        formControlName="color"
+        class="form-control"
+        required
+      />
+      <div
+        *ngIf="
+          productForm.get('color')?.invalid && productForm.get('color')?.touched
+        "
+        class="error-message"
+      >
+        <span class="error-message">Color is required.</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="gender" class="form-label">Gender:</label>
+      <select
+        id="gender"
+        formControlName="gender"
+        class="form-control"
+        required
+      >
+        <option value="" disabled>Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+      <div
+        *ngIf="
+          productForm.get('gender')?.invalid &&
+          productForm.get('gender')?.touched
+        "
+        class="error-message"
+      >
+        <span class="error-message">Gender is required.</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="images" class="form-label">Image:</label>
+      <input
+        type="file"
+        id="images"
+        formControlName="images"
+        class="form-control"
+        (change)="onImageSelected($event)"
+        multiple
+      />
+      <div
+        *ngIf="productForm.get('images')?.value?.length ? false : true"
+        class="error-message"
+      >
+        <span class="error-message">Image is required.</span>
+      </div>
+
+      <div formArrayName="images">
+        <div *ngFor="let image of images.controls; let i = index">
+          <div>
+            <img
+              [src]="getImageSrc(image.value)"
+              alt="Selected Image"
+              class="selected-image"
+            />
+            <label>{{ image.value.name }}</label>
+            <button type="button" (click)="removeImage(i)">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div formArrayName="sizeStock">
+      <div *ngFor="let sizeStockControl of sizeStock.controls; let i = index">
+        <div [formGroupName]="i">
+          <div>
+            <label for="size" class="form-label">Size:</label>
+            <select
+              id="size"
+              formControlName="size"
+              class="form-control"
+              required
+            >
+              <option value="" disabled>Select Size</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+            <div
+              *ngIf="
+                sizeStockControl.get('size')?.invalid &&
+                sizeStockControl.get('size')?.touched
+              "
+              class="error-message"
+            >
+              <span class="error-message">Size is required.</span>
+            </div>
+          </div>
+          <div>
+            <label for="stock" class="form-label">Stock:</label>
+            <input
+              type="number"
+              id="stock"
+              formControlName="stock"
+              class="form-control"
+              required
+            />
+            <div
+              *ngIf="
+                sizeStockControl.get('stock')?.invalid &&
+                sizeStockControl.get('stock')?.touched
+              "
+              class="error-message"
+            >
+              <span class="error-message">Stock is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" (click)="addSizeStock()">Add Size/Stock</button>
+
+    <button
+      type="submit"
+      [disabled]="!productForm.valid"
+      class="btn btn-primary add-product-btn"
+    >
+      Add Product
+    </button>
+  </form>
+</div>

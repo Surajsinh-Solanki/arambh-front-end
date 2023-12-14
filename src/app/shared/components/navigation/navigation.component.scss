@@ -1,0 +1,105 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333; /* Background color of the navigation bar */
+  padding: 10px 20px;
+  color: #fff; /* Text color */
+  position: sticky;
+  top: 0;
+  z-index: 12;
+
+  .left {
+    display: flex;
+    align-items: center;
+
+    .menu {
+      cursor: pointer;
+      padding: 10px;
+    }
+
+    .menu-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      span {
+        width: 20px;
+        height: 3px;
+        background-color: #fff; /* Color of the menu icon bars */
+        z-index: 14;
+        position: relative;
+      }
+    }
+    
+    .search {
+      margin-left: 20px;
+
+      input[type='text'] {
+        padding: 5px;
+        border: none;
+        border-radius: 5px;
+      }
+
+      button {
+        padding: 5px 10px;
+        background-color: #007bff; /* Color of the search button */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        margin-left: 5px;
+      }
+    }
+  }
+  
+  .center {
+    text-align: center;
+
+    img {
+      max-width: 100px; /* Set the max width of your logo */
+    }
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+
+    .cart {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+
+      i {
+        font-size: 24px; /* Adjust the cart icon size */
+      }
+
+      .cart-count {
+        background-color: #007bff; /* Background color of the cart count */
+        color: #fff;
+        border-radius: 50%;
+        padding: 5px 8px;
+        margin-left: 5px;
+      }
+    }
+  }
+}
+.close-nav{
+  transform: translateX(-300px);
+  transition: all 0.3s ease-in-out;
+  height: 100vh;
+  z-index: 13;
+  padding-top: 30px;
+
+  &.open-nav{
+    transform: translate(0);
+    transition: all 0.3s ease-in-out;
+  }
+}
+.menu-inside{
+  padding-bottom: 20px;
+  padding-left: 5px;
+  padding-top: 8px;
+}

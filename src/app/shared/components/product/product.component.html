@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div
+      class="col-3 card text-center mb-3 m-5 p-0"
+      *ngFor="let product of products?.product"
+    >
+      <div class="card-body">
+        <div>
+          <img
+            routerLink="details"
+            [queryParams]="{ id: product?._id }"
+            src="https://dev-ms.taskopad.com/{{ product?.imageUrls[0] }}"
+            class="card-img-top"
+            alt="Product Image"
+          />
+        </div>
+        <div>
+          <h5
+            class="card-title"
+            routerLink="details"
+            [queryParams]="{ id: product?._id }"
+          >
+            {{ product?.name }}
+          </h5>
+          <p class="card-text">Rs. {{ product?.price }}</p>
+          <p class="card-text">{{ product?.description }}</p>
+          <p class="card-text">Brand: {{ product.brand }}</p>
+          <p class="card-text">Gender: {{ product.gender }}</p>
+          <a
+            routerLink="details"
+            [queryParams]="{ id: product?._id }"
+            class="btn btn-primary"
+            disabled="true"
+            >Details</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
