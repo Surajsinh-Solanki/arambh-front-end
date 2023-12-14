@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class SessionStorageService {
   constructor() {}
@@ -22,7 +22,7 @@ export class SessionStorageService {
   }
 
   getLoggedInUser(key: any) {
-    return JSON.parse(localStorage.getItem(key) || "{}");
+    return JSON.parse(localStorage.getItem(key) || '{}');
   }
 
   clearStorageOnLogout() {

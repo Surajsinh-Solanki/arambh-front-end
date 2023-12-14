@@ -5,7 +5,9 @@ import { SharedRoutingModule } from './shared-routing.module';
 // import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
-  declarations: [FooterComponent, NavigationComponent , 
+  declarations: [
+    FooterComponent,
+    NavigationComponent,
     // PaymentComponent
   ],
   imports: [SharedRoutingModule],

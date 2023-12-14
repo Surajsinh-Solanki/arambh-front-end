@@ -1,80 +1,79 @@
 .container {
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  .mt-3 {
-    margin-top: 1rem;
-  }
-  
-  .form-label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  
-  .form-control {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    box-sizing: border-box;
-  }
-  
-  .error-message {
-    color: red;
-  }
-  
-  /* Style for variations */
-  .variation-container {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-  }
-  
-  .variation-label {
-    font-weight: bold;
-    margin-top: 10px;
-    display: block;
-  }
-  
-  .variation-input {
-    width: calc(100% - 22px);
-    padding: 8px;
-    margin-top: 5px;
-    box-sizing: border-box;
-  }
-  
-  .variation-image-input {
-    margin-top: 5px;
-  }
-  
-  .add-variation-btn {
-    margin-top: 10px;
-    background-color: #007bff;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .add-variation-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  .add-product-btn {
-    margin-top: 10px;
-    background-color: #28a745;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .add-product-btn:disabled {
-    background-color: #6c757d;
-    cursor: not-allowed;
-  }
-  
+  max-width: 600px;
+  margin: auto;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+.error-message {
+  color: red;
+}
+
+/* Style for variations */
+.variation-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.variation-label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+.variation-input {
+  width: calc(100% - 22px);
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+.variation-image-input {
+  margin-top: 5px;
+}
+
+.add-variation-btn {
+  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-variation-btn:hover {
+  background-color: #0056b3;
+}
+
+.add-product-btn {
+  margin-top: 10px;
+  background-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-product-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}

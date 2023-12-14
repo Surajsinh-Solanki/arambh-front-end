@@ -21,7 +21,7 @@ export class CartService {
     return this.http.post(`${NAVIGATE_ROUTES.CART}/checkout`, data);
   }
 
-  updateCartProduct(data: Cart , id : string) {
+  updateCartProduct(data: Cart, id: string) {
     return this.http.put(`${NAVIGATE_ROUTES.CART}?id=${id}`, data);
   }
 
