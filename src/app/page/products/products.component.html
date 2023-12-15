@@ -23,7 +23,23 @@
     </div>
   </div>
   <div class="filter filter-range">
-    <h2>Fill by price</h2>
+    <h2>Filter</h2>
+    <div class="product-sort-by">
+      <label for="sort-by"><strong>Sort by : </strong></label>
+      <select class="sort">
+        <option value="{price : 1}">Price, low to high</option>
+        <option value="{price : -1}">Price, high to low</option>
+        <option value="{name : 1}">Alphabetically, A-Z</option>
+        <option value="{name : -1}">Alphabetically, Z-A</option>
+        <option value="{createdAt : 1}">Date, old to new</option>
+        <option value="{createdAt : -1}">Date, new to old</option>
+      </select>
+    </div>
+    <strong>Price</strong> : {{ minRange }} - {{ maxRange }}
+    <mat-slider min="0" max="5000">
+      <input [(ngModel)]="minRange" (ngModelChange)="priceChange('min')" matSliderStartThumb />
+      <input [(ngModel)]="maxRange" (ngModelChange)="priceChange('max')" matSliderEndThumb />
+    </mat-slider>
     <div class="filter-category">
       <div class="fc-range"></div>
       <div class="card">
@@ -31,32 +47,32 @@
           <strong>Color</strong>
         </div>
         <ul class="list-group list-group-flush">
-          <a href="#" class="list-group-item list-group-item-action">
+          <a class="list-group-item list-group-item-action">
             <input type="checkbox" name="" id="" class="checkbox-style" />
             Red</a
           >
-          <a href="#" class="list-group-item list-group-item-action">
+          <a class="list-group-item list-group-item-action">
             <input type="checkbox" name="" id="" class="checkbox-style" />
             Green</a
           >
-          <a href="#" class="list-group-item list-group-item-action">
+          <a class="list-group-item list-group-item-action">
             <input type="checkbox" name="" id="" class="checkbox-style" />
             Blue</a
           >
         </ul>
         <div class="card-body subheader">
-          <strong>Item Condition</strong>
+          <strong>brand</strong>
         </div>
         <ul class="list-group list-group-flush">
-          <a href="#" class="list-group-item list-group-item-action">
+          <a class="list-group-item list-group-item-action">
             <input type="checkbox" name="" id="" class="checkbox-style" />
             New</a
           >
-          <a href="#" class="list-group-item list-group-item-action">
+          <a class="list-group-item list-group-item-action">
             <input type="checkbox" name="" id="" class="checkbox-style" />
             Reused</a
           >
-          <a href="#" class="list-group-item list-group-item-action">
+          <a class="list-group-item list-group-item-action">
             <input type="checkbox" name="" id="" class="checkbox-style" />
             Used</a
           >
@@ -64,6 +80,45 @@
       </div>
     </div>
   </div>
-  <app-product></app-product>
+  <div class="product-list">
+    <div class="row">
+      <div
+        class="col-3 card text-center mb-3 m-5 p-0"
+        *ngFor="let product of products?.product"
+      >
+        <div class="card-body">
+          <div>
+            <img
+              routerLink="details"
+              [queryParams]="{ id: product?._id }"
+              src="https://dev-ms.taskopad.com/{{ product?.imageUrls[0] }}"
+              class="card-img-top"
+              alt="Product Image"
+            />
+          </div>
+          <div>
+            <h5
+              class="card-title"
+              routerLink="details"
+              [queryParams]="{ id: product?._id }"
+            >
+              {{ product?.name }}
+            </h5>
+            <p class="card-text">Rs. {{ product?.price }}</p>
+            <p class="card-text">{{ product?.description }}</p>
+            <p class="card-text">Brand: {{ product.brand }}</p>
+            <p class="card-text">Gender: {{ product.gender }}</p>
+            <a
+              routerLink="details"
+              [queryParams]="{ id: product?._id }"
+              class="btn btn-primary"
+              disabled="true"
+              >Details</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <app-footer></app-footer>
 </div>
