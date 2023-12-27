@@ -51,7 +51,6 @@ export class ProductCartComponent {
         show_coupons: true,
         handler: (response: any) => {
           // Handle the payment success
-          console.log(response);
         },
         prefill: {
           name: 'John Doe',

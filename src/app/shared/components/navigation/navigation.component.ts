@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { SearchTextService } from 'src/app/service/shared/search-text.service';
 
 @Component({
   selector: 'app-navigation',
@@ -8,8 +8,13 @@ import { Router } from '@angular/router';
 })
 export class NavigationComponent {
   isMenuOpen = false;
-  constructor(private router: Router) {}
+  searchText: string = '';
+  constructor(private searchService: SearchTextService) {}
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  onSearchChange(searchText: string) {
+    this.searchService.setSearchText(this.searchText);
   }
 }

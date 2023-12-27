@@ -6,6 +6,7 @@ export const NAVIGATE_ROUTES = {
   USER_DETAILS: environment.API_URL + 'auth/user',
   PRODUCT: environment.API_URL + 'product',
   CART: environment.API_URL + 'cart',
+  REVIEW: environment.API_URL + 'review',
 };
 
 export const RAZOR_PAY_CONFIG = {

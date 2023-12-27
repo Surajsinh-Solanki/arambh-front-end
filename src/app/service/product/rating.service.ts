@@ -2,12 +2,19 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NAVIGATE_ROUTES } from 'src/app/shared/global/constants';
 
+interface AddReview {
+  productId: string;
+  rating: number;
+  comment?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
-export class ProductService {
+export class RatingService {
   constructor(private http: HttpClient) {}
-  getAllProduct(query: Record<string, string>) {
+
+  getAllProductRating(query: Record<string, string>) {
     let params = new HttpParams();
 
     for (const key in query) {
@@ -15,14 +22,10 @@ export class ProductService {
         params = params.append(key, query[key]);
       }
     }
-    return this.http.get(`${NAVIGATE_ROUTES.PRODUCT}`, { params });
+    return this.http.get(`${NAVIGATE_ROUTES.REVIEW}`, { params });
   }
 
-  addProduct(product: any) {
-    return this.http.post(`${NAVIGATE_ROUTES.PRODUCT}`, product);
-  }
-
-  getProductById(id: string) {
-    return this.http.get(`${NAVIGATE_ROUTES.PRODUCT}/${id}`);
+  addProductReview(data: AddReview) {
+    return this.http.post(`${NAVIGATE_ROUTES.REVIEW}`, data);
   }
 }

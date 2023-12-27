@@ -44,7 +44,6 @@ export class LoginComponent {
         },
       );
     } else {
-      console.log(this.loginForm);
       this.toast.warning('please enter a valid Data');
     }
   }

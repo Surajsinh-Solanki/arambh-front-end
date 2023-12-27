@@ -4,17 +4,17 @@
   <div class="filter">
     <h2>Category</h2>
     <div class="filter-category">
-      <div class="category-list">
+      <div class="category-list" *ngFor="let category of ['t-shirt', 'shirt']">
         <div class="image-content">
-          <div class="img">
-            <img
-              src="https://dev-ms.taskopad.com/uploads/product/15-Pictures-Of-Aishwarya-Rai-Without-Makeup-2-1701236329664.jpg"
-              alt="icon"
-            />
-          </div>
-          <div class="content">
-            <p>Lorem ipsum dolor sit</p>
-          </div>
+          <input
+            type="checkbox"
+            [ngModel]="selectedCategory.includes(category)"
+            (ngModelChange)="toggleBrandSelection('category', category)"
+            [value]="category"
+            id="{{ category }}"
+            class="checkbox-style"
+          />
+          <p>{{ category.toUpperCase() }}</p>
         </div>
         <div class="count">
           <span>30</span>
@@ -26,19 +26,19 @@
     <h2>Filter</h2>
     <div class="product-sort-by">
       <label for="sort-by"><strong>Sort by : </strong></label>
-      <select class="sort">
-        <option value="{price : 1}">Price, low to high</option>
-        <option value="{price : -1}">Price, high to low</option>
-        <option value="{name : 1}">Alphabetically, A-Z</option>
-        <option value="{name : -1}">Alphabetically, Z-A</option>
-        <option value="{createdAt : 1}">Date, old to new</option>
-        <option value="{createdAt : -1}">Date, new to old</option>
+      <select [(ngModel)]="sortBy" class="sort">
+        <option value='{"price" : 1}'>Price, low to high</option>
+        <option value='{"price" : -1}'>Price, high to low</option>
+        <option value='{"name" : 1}'>Alphabetically, A-Z</option>
+        <option value='{"name" : -1}'>Alphabetically, Z-A</option>
+        <option value='{"createdAt" : 1}'>Date, old to new</option>
+        <option value='{"createdAt" : -1}' selected>Date, new to old</option>
       </select>
     </div>
-    <strong>Price</strong> : {{ minRange }} - {{ maxRange }}
+    <strong>Price</strong> : {{ minPrice }} - {{ maxPrice }}
     <mat-slider min="0" max="5000">
-      <input [(ngModel)]="minRange" (ngModelChange)="priceChange('min')" matSliderStartThumb />
-      <input [(ngModel)]="maxRange" (ngModelChange)="priceChange('max')" matSliderEndThumb />
+      <input [(ngModel)]="minPrice" name="mPrice" matSliderStartThumb />
+      <input [(ngModel)]="maxPrice" name="mxPrice" matSliderEndThumb />
     </mat-slider>
     <div class="filter-category">
       <div class="fc-range"></div>
@@ -47,37 +47,43 @@
           <strong>Color</strong>
         </div>
         <ul class="list-group list-group-flush">
-          <a class="list-group-item list-group-item-action">
-            <input type="checkbox" name="" id="" class="checkbox-style" />
-            Red</a
+          <a
+            *ngFor="let color of ['red', 'blue', 'green']"
+            class="list-group-item list-group-item-action"
           >
-          <a class="list-group-item list-group-item-action">
-            <input type="checkbox" name="" id="" class="checkbox-style" />
-            Green</a
-          >
-          <a class="list-group-item list-group-item-action">
-            <input type="checkbox" name="" id="" class="checkbox-style" />
-            Blue</a
-          >
+            <input
+              type="checkbox"
+              [ngModel]="selectedBrands.includes(color)"
+              (ngModelChange)="toggleBrandSelection('color', color)"
+              [value]="color"
+              id="{{ color }}"
+              name="color"
+              class="checkbox-style"
+            />
+            {{ color.toUpperCase() }}
+          </a>
         </ul>
         <div class="card-body subheader">
           <strong>brand</strong>
         </div>
         <ul class="list-group list-group-flush">
-          <a class="list-group-item list-group-item-action">
-            <input type="checkbox" name="" id="" class="checkbox-style" />
-            New</a
+          <a
+            *ngFor="let brand of ['arambh', 'new', 'design']"
+            class="list-group-item list-group-item-action"
           >
-          <a class="list-group-item list-group-item-action">
-            <input type="checkbox" name="" id="" class="checkbox-style" />
-            Reused</a
-          >
-          <a class="list-group-item list-group-item-action">
-            <input type="checkbox" name="" id="" class="checkbox-style" />
-            Used</a
-          >
+            <input
+              type="checkbox"
+              [ngModel]="selectedBrands.includes(brand)"
+              (ngModelChange)="toggleBrandSelection('brand', brand)"
+              [value]="brand"
+              id="{{ brand }}"
+              class="checkbox-style"
+            />
+            {{ brand.toUpperCase() }}
+          </a>
         </ul>
       </div>
+      <button (click)="filter()">Apply Filter</button>
     </div>
   </div>
   <div class="product-list">
