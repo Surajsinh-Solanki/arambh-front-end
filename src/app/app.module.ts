@@ -16,6 +16,7 @@ import { ProductRoutingModule } from './page/products/products.routing.module';
 import { SharedModule } from './shared/shared.module';
 import { ProductCartComponent } from './page/product-cart/product-cart.component';
 import { RequestInterceptorInterceptor } from './shared/interceptor/request-interceptor.interceptor';
+import { OrderComponent } from './page/order/order.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import { RequestInterceptorInterceptor } from './shared/interceptor/request-inte
     AdminComponent,
     AddProductComponent,
     ProductCartComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,

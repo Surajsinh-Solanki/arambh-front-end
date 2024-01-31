@@ -148,13 +148,23 @@
 
     <div>
       <label for="color" class="form-label">Color:</label>
-      <input
-        type="color"
+      <select
         id="color"
         formControlName="color"
         class="form-control"
+        (change)="onColorChange()"
+        [ngStyle]="{ 'background-color': selectedColor }"
         required
-      />
+      >
+        <option value="" disabled>Select a color</option>
+        <option
+          *ngFor="let color of colorKeys"
+          [value]="colorNames[color]"
+          [ngStyle]="{ 'background-color': colorNames[color] }"
+        >
+          {{ color }}
+        </option>
+      </select>
       <div
         *ngIf="
           productForm.get('color')?.invalid && productForm.get('color')?.touched

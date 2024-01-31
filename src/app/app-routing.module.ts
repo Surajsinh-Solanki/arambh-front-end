@@ -8,6 +8,7 @@ import { AdminComponent } from './page/admin/admin.component';
 import { ProductCartComponent } from './page/product-cart/product-cart.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AdminGuard } from './shared/guards/admin.guard';
+import { OrderComponent } from './page/order/order.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,11 @@ const routes: Routes = [
   {
     path: 'cart',
     component: ProductCartComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'order',
+    component: OrderComponent,
     canActivate: [AuthGuard],
   },
   {

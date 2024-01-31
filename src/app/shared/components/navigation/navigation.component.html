@@ -23,7 +23,7 @@
           <a
             class="nav-link active"
             aria-current="page"
-            href="/products?gender=male"
+            [routerLink]="['/products', { gender: 'male' }]"
             >Men</a
           >
         </li>
@@ -31,13 +31,18 @@
           <a
             class="nav-link active"
             aria-current="page"
-            href="/products?gender=female"
+            [routerLink]="['/products', { gender: 'female' }]"
             >Women</a
           >
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" routerLink="/cart"
             >Cart</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/order"
+            >Order</a
           >
         </li>
       </ul>

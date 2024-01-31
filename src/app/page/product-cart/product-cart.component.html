@@ -17,6 +17,7 @@
         <ul>
           <li class="item item-heading">Item</li>
           <li class="price">Price</li>
+          <li class="price">Mrp</li>
           <li class="quantity">Quantity</li>
           <li class="subtotal">Subtotal</li>
         </ul>
@@ -28,6 +29,8 @@
               src="https://dev-ms.taskopad.com/{{
                 cartItem.product.imageUrls[0]
               }}"
+              routerLink="/products/details"
+              [queryParams]="{ id: cartItem.product._id }"
               alt="Placeholder Image"
               class="product-frame"
             />
@@ -36,9 +39,8 @@
             <h1>
               <strong
                 ><span class="item-quantity">{{ cartItem.quantity }}</span> x
-                Eliza J</strong
-              >
-              Lace Sleeve Cuff Dress
+              </strong>
+              {{ cartItem.product.name }}
             </h1>
             <div class="d-flex">
               <span
@@ -52,7 +54,8 @@
             </div>
           </div>
         </div>
-        <div class="price">{{ cartItem.product.price }}</div>
+        <div class="price">{{ cartItem.product.price || 0 }}</div>
+        <div class="price">{{ cartItem.product.mrp || 0 }}</div>
         <div class="quantity">
           <input
             type="number"
@@ -73,36 +76,27 @@
     <aside>
       <div class="summary">
         <div class="summary-total-items">
-          <span class="total-items"></span> Items in your Bag
+          <span class="total-items"></span> Payment
         </div>
         <div class="summary-subtotal">
-          <div class="subtotal-title">Subtotal</div>
-          <div class="subtotal-value final-value" id="basket-subtotal">
-            {{ totalPrice }}
-          </div>
           <div class="subtotal-title">Total MRP</div>
           <div class="subtotal-value final-value" id="basket-subtotal">
             {{ totalMrp }}
+          </div>
+          <div class="subtotal-title">- discount</div>
+          <div class="subtotal-value final-value" id="basket-subtotal">
+            {{ totalMrp - totalPrice }}
           </div>
           <div class="summary-promo hide">
             <div class="promo-title">Promotion</div>
             <div class="promo-value final-value" id="basket-promo"></div>
           </div>
         </div>
-        <div class="summary-delivery">
-          <select name="delivery-collection" class="summary-delivery-selection">
-            <option value="0" selected="selected">
-              Select Collection or Delivery
-            </option>
-            <option value="collection">Collection</option>
-            <option value="first-class">Royal Mail 1st Class</option>
-            <option value="second-class">Royal Mail 2nd Class</option>
-            <option value="signed-for">Royal Mail Special Delivery</option>
-          </select>
-        </div>
         <div class="summary-total">
           <div class="total-title">Total</div>
-          <div class="total-value final-value" id="basket-total">130.00</div>
+          <div class="total-value final-value" id="basket-total">
+            {{ totalPrice }}
+          </div>
         </div>
         <div class="summary-checkout">
           <button

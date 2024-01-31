@@ -35,7 +35,7 @@ button {
 
   &:hover,
   &:focus {
-    background-color: #555;
+    background-color: #555555;
   }
 }
 
@@ -79,7 +79,7 @@ main {
   margin: 0 auto;
   overflow: hidden;
   padding: 1rem 0;
-  width: 960px;
+  width: 1200px;
 }
 
 .basket,
@@ -152,7 +152,7 @@ li.subtotal:before {
 .price,
 .quantity,
 .subtotal {
-  width: 15%;
+  width: 10%;
 
   &.subtotal {
     text-align: right;
@@ -217,7 +217,7 @@ aside {
   width: 30%;
 
   .summary {
-    background-color: #eee;
+    background-color: white;
     border: 1px solid #aaa;
     padding: 1rem;
     position: fixed;

@@ -2,8 +2,11 @@ import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from 'src/app/service/product/cart.service';
 import { Utils } from 'src/app/shared/global/utils';
-import { environment } from 'src/environments/environment';
-declare var Razorpay: any;
+declare var Cashfree: any;
+
+const cashfree = Cashfree({
+  mode: 'sandbox', //or production   check :::
+});
 
 @Component({
   selector: 'app-product-cart',
@@ -43,27 +46,12 @@ export class ProductCartComponent {
 
   checkout(data: any) {
     this.cartService.checkout(data).subscribe(async (order: any) => {
-      const options = {
-        key: environment.RAZOR_PAY_KEY,
-        amount: order.amount,
-        currency: order.currency,
-        order_id: order.id,
-        show_coupons: true,
-        handler: (response: any) => {
-          // Handle the payment success
-        },
-        prefill: {
-          name: 'John Doe',
-          email: 'john@example.com',
-          coupon_code: 'COUPON50',
-        },
-        theme: {
-          color: '#F37254',
-        },
+      this.cartService.createOrder(data).subscribe();
+      let checkoutOptions = {
+        paymentSessionId: order,
+        returnUrl: 'http://localhost:4000/cart',
       };
-
-      const razorpay = new Razorpay(options);
-      razorpay.open();
+      cashfree.checkout(checkoutOptions);
     });
   }
 

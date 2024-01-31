@@ -4,20 +4,20 @@
   <div class="filter">
     <h2>Category</h2>
     <div class="filter-category">
-      <div class="category-list" *ngFor="let category of ['t-shirt', 'shirt']">
+      <div class="category-list" *ngFor="let cat of category">
         <div class="image-content">
           <input
             type="checkbox"
-            [ngModel]="selectedCategory.includes(category)"
-            (ngModelChange)="toggleBrandSelection('category', category)"
-            [value]="category"
-            id="{{ category }}"
+            [ngModel]="selectedCategory.includes(cat._id)"
+            (ngModelChange)="toggleBrandSelection('category', cat._id)"
+            [value]="cat._id"
+            id="{{ cat._id }}"
             class="checkbox-style"
           />
-          <p>{{ category.toUpperCase() }}</p>
+          <p>{{ cat._id.toUpperCase() }}</p>
         </div>
         <div class="count">
-          <span>30</span>
+          <span>{{cat.count}}</span>
         </div>
       </div>
     </div>
@@ -48,19 +48,19 @@
         </div>
         <ul class="list-group list-group-flush">
           <a
-            *ngFor="let color of ['red', 'blue', 'green']"
+            *ngFor="let col of color"
             class="list-group-item list-group-item-action"
           >
             <input
               type="checkbox"
-              [ngModel]="selectedBrands.includes(color)"
-              (ngModelChange)="toggleBrandSelection('color', color)"
-              [value]="color"
-              id="{{ color }}"
+              [ngModel]="selectedBrands.includes(col._id)"
+              (ngModelChange)="toggleBrandSelection('color', col._id)"
+              [value]="col._id"
+              id="{{ col._id }}"
               name="color"
               class="checkbox-style"
             />
-            {{ color.toUpperCase() }}
+            {{ col.name.toUpperCase() }}
           </a>
         </ul>
         <div class="card-body subheader">

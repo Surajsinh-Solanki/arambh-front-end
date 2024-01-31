@@ -23,6 +23,26 @@ export class ProductService {
   }
 
   getProductById(id: string) {
-    return this.http.get(`${NAVIGATE_ROUTES.PRODUCT}/${id}`);
+    const query: Record<string, string> = { id: id };
+    let params = new HttpParams();
+
+    for (const key in query) {
+      if (query.hasOwnProperty(key)) {
+        params = params.append(key, query[key]);
+      }
+    }
+    return this.http.get(`${NAVIGATE_ROUTES.PRODUCT}/details`, { params });
+  }
+
+  getCategoryCount() {
+    return this.http.get(`${NAVIGATE_ROUTES.PRODUCT}/category`);
+  }
+
+  getColorCount() {
+    return this.http.get(`${NAVIGATE_ROUTES.PRODUCT}/color`);
+  }
+
+  getBrandCount() {
+    return this.http.get(`${NAVIGATE_ROUTES.PRODUCT}/brand`);
   }
 }

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from 'src/app/service/product/product.service';
 import { SearchTextService } from 'src/app/service/shared/search-text.service';
+import { colorName } from 'src/app/shared/global/color-name';
 import { Utils } from 'src/app/shared/global/utils';
 
 @Component({
@@ -10,7 +12,11 @@ import { Utils } from 'src/app/shared/global/utils';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent {
+  query: any = {};
   products: any;
+  category: any;
+  color: any;
+  brand: any;
   minPrice: number = 100;
   maxPrice: number = 2000;
   selectedColors: string[] = [];
@@ -22,15 +28,24 @@ export class ProductsComponent {
     private service: ProductService,
     private toast: ToastrService,
     private searchService: SearchTextService,
+    private route: ActivatedRoute,
   ) {}
 
   async ngOnInit() {
     const query = Utils.getAllQueryParameters();
     this.getAllProducts(query);
+    this.getCategoryCount();
+    this.getColorCount();
+    this.getBrandCount();
+    //check
+    this.route.queryParams.subscribe((params) => {
+      this.query['gender'] = params['gender'] || '';
+      this.getAllProducts(this.query);
+    });
     this.searchService.searchText$.subscribe((searchText) => {
       if (searchText.trim() !== '') {
-        const query = { searchString: searchText };
-        this.getAllProducts(query);
+        this.query['searchString'] = searchText;
+        this.getAllProducts(this.query);
       }
     });
   }
@@ -38,9 +53,63 @@ export class ProductsComponent {
   async getAllProducts(query: any) {
     (await this.service.getAllProduct(query)).subscribe(
       (res: any) => {
-        this.products = res?.msg?.result;
+        this.products = res?.result;
         console.log(this.products);
         this.toast.success('All Products Success.');
+      },
+      (error) => {
+        if (error.error.code) {
+          this.toast.error(error.error.msg);
+        } else {
+          this.toast.error('An error occurred. Please try again later.');
+        }
+      },
+    );
+  }
+
+  async getCategoryCount() {
+    (await this.service.getCategoryCount()).subscribe(
+      (res: any) => {
+        this.category = res?.result;
+        console.log('category', this.category);
+      },
+      (error) => {
+        if (error.error.code) {
+          this.toast.error(error.error.msg);
+        } else {
+          this.toast.error('An error occurred. Please try again later.');
+        }
+      },
+    );
+  }
+
+  async getColorCount() {
+    (await this.service.getColorCount()).subscribe(
+      (res: any) => {
+        const colorDataWithNames = res?.result.map((item: { _id: string }) => {
+          const name =
+            Object.keys(colorName).find((key) => colorName[key] === item._id) ||
+            'Unknown';
+          return { ...item, name };
+        });
+        this.color = colorDataWithNames;
+        console.log('color', colorDataWithNames);
+      },
+      (error) => {
+        if (error.error.code) {
+          this.toast.error(error.error.msg);
+        } else {
+          this.toast.error('An error occurred. Please try again later.');
+        }
+      },
+    );
+  }
+
+  async getBrandCount() {
+    (await this.service.getBrandCount()).subscribe(
+      (res: any) => {
+        this.brand = res?.result;
+        console.log('brand', this.brand);
       },
       (error) => {
         if (error.error.code) {

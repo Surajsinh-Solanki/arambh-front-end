@@ -28,4 +28,8 @@ export class CartService {
   deleteCartProduct(id: string) {
     return this.http.delete(`${NAVIGATE_ROUTES.CART}?id=${id}`);
   }
+
+  createOrder(data: any) {
+    return this.http.post(`${NAVIGATE_ROUTES.ORDER}/`, data);
+  }
 }

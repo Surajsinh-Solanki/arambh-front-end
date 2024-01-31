@@ -24,6 +24,7 @@
     "@angular/platform-browser": "^17.0.7",
     "@angular/platform-browser-dynamic": "^17.0.7",
     "@angular/router": "^17.0.7",
+    "@cashfreepayments/cashfree-js": "^1.0.4",
     "@stripe/stripe-js": "^2.2.0",
     "bootstrap": "^5.3.2",
     "ngx-toastr": "^17.0.2",

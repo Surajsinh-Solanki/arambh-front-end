@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from 'src/app/service/product/product.service';
+import { colorName } from '../../global/color-name';
 
 @Component({
   selector: 'app-add-product',
@@ -14,6 +15,9 @@ export class AddProductComponent {
     private service: ProductService,
     private toast: ToastrService,
   ) {}
+
+  colorNames: { [key: string]: string } = colorName;
+  colorKeys: string[] = Object.keys(colorName);
 
   selectedFile: File | undefined;
   selectedColor: string = '#ffffff';
@@ -45,7 +49,7 @@ export class AddProductComponent {
       const price: any = this.productForm.value.price;
       const brand: any = this.productForm.value.brand;
       const gender: any = this.productForm.value.gender;
-      const color: any = this.selectedColor;
+      const color: string = this.selectedColor;
       const mrp: any = this.productForm.value.mrp;
       const gst: any = this.productForm.value.gst;
       // Loop through image files and append them to the form data
@@ -131,7 +135,7 @@ export class AddProductComponent {
     return URL.createObjectURL(file);
   }
 
-  onColorChange(event: any) {
-    this.productForm.get('color')?.setValue(event);
+  onColorChange() {
+    this.selectedColor = this.productForm.value.color || '#ffffff';
   }
 }
