@@ -6,6 +6,7 @@ import {
   Router,
   UrlTree,
 } from '@angular/router';
+import { getFromStorage } from 'src/app/service/storage-service/storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +22,8 @@ export class AuthGuard implements CanActivate {
   }
   constructor(private router: Router) {}
   checkLogin(url: string): true | UrlTree {
-    let val: string | null = localStorage.getItem('isUserLoggedIn');
-    if (val != null && val == 'true') {
+    let isUserLoggedIn: string | null = getFromStorage('isUserLoggedIn');
+    if (isUserLoggedIn != null && isUserLoggedIn == 'true') {
       if (url == '/') {
         setTimeout(() => {
           this.router.parseUrl('/');

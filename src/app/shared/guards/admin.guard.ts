@@ -6,6 +6,7 @@ import {
   Router,
   UrlTree,
 } from '@angular/router';
+import { getFromStorage } from 'src/app/service/storage-service/storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +22,8 @@ export class AdminGuard implements CanActivate {
   }
   constructor(private router: Router) {}
   checkLogin(url: string): true | UrlTree {
-    let val: string | null = localStorage.getItem('isUserLoggedIn');
-    let admin: string | null = localStorage.getItem('isAdmin');
+    const val = getFromStorage('isUserLoggedIn');
+    const admin = getFromStorage('isAdmin');
     if (val != null && val == 'true' && admin != null && admin == 'true') {
       if (url == '/') {
         setTimeout(() => {

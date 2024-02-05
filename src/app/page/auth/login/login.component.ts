@@ -3,7 +3,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth/auth.service';
-import { LocalStorageService } from 'src/app/service/storage-service/local-storage.service';
+import {
+  LocalStorageService,
+  SessionStorageService,
+} from 'src/app/service/storage-service/storage.service';
 import { Login } from 'src/app/shared/interface/user.interface';
 
 @Component({
@@ -12,12 +15,15 @@ import { Login } from 'src/app/shared/interface/user.interface';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  rememberMe: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private toast: ToastrService,
     private service: AuthService,
     private router: Router,
     private localStorage: LocalStorageService,
+    private sessionStorage: SessionStorageService,
   ) {}
   loginForm = this.formBuilder.group({
     emailOrMobile: this.formBuilder.control('', [Validators.required]),
@@ -29,8 +35,19 @@ export class LoginComponent {
       this.service.ProceedLogin(this.loginForm.value as Login).subscribe(
         (res: any) => {
           if (res.result?.token) {
-            this.localStorage.setLocalStore('authorization', res.result?.token);
-            localStorage.setItem('isUserLoggedIn', 'true');
+            if (this.rememberMe) {
+              this.localStorage.setLocalStore(
+                'authorization',
+                res.result?.token,
+              );
+              this.localStorage.setLocalStore('isUserLoggedIn', 'true');
+            } else {
+              this.sessionStorage.setSessionStore(
+                'authorization',
+                res.result?.token,
+              );
+              this.sessionStorage.setSessionStore('isUserLoggedIn', 'true');
+            }
           }
           this.toast.success('Login Success.');
           this.router.navigate(['/']);
