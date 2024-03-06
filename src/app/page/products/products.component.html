@@ -1,130 +1,152 @@
-<div class="main-block">
-  <app-navigation></app-navigation>
-  <router-outlet> </router-outlet>
-  <div class="filter">
-    <h2>Category</h2>
-    <div class="filter-category">
-      <div class="category-list" *ngFor="let cat of category">
-        <div class="image-content">
-          <input
-            type="checkbox"
-            [ngModel]="selectedCategory.includes(cat._id)"
-            (ngModelChange)="toggleBrandSelection('category', cat._id)"
-            [value]="cat._id"
-            id="{{ cat._id }}"
-            class="checkbox-style"
-          />
-          <p>{{ cat._id.toUpperCase() }}</p>
-        </div>
-        <div class="count">
-          <span>{{cat.count}}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="filter filter-range">
-    <h2>Filter</h2>
-    <div class="product-sort-by">
-      <label for="sort-by"><strong>Sort by : </strong></label>
-      <select [(ngModel)]="sortBy" class="sort">
-        <option value='{"price" : 1}'>Price, low to high</option>
-        <option value='{"price" : -1}'>Price, high to low</option>
-        <option value='{"name" : 1}'>Alphabetically, A-Z</option>
-        <option value='{"name" : -1}'>Alphabetically, Z-A</option>
-        <option value='{"createdAt" : 1}'>Date, old to new</option>
-        <option value='{"createdAt" : -1}' selected>Date, new to old</option>
-      </select>
-    </div>
-    <strong>Price</strong> : {{ minPrice }} - {{ maxPrice }}
-    <mat-slider min="0" max="5000">
-      <input [(ngModel)]="minPrice" name="mPrice" matSliderStartThumb />
-      <input [(ngModel)]="maxPrice" name="mxPrice" matSliderEndThumb />
-    </mat-slider>
-    <div class="filter-category">
-      <div class="fc-range"></div>
-      <div class="card">
-        <div class="card-body subheader">
-          <strong>Color</strong>
-        </div>
-        <ul class="list-group list-group-flush">
-          <a
-            *ngFor="let col of color"
-            class="list-group-item list-group-item-action"
-          >
-            <input
-              type="checkbox"
-              [ngModel]="selectedBrands.includes(col._id)"
-              (ngModelChange)="toggleBrandSelection('color', col._id)"
-              [value]="col._id"
-              id="{{ col._id }}"
-              name="color"
-              class="checkbox-style"
-            />
-            {{ col.name.toUpperCase() }}
-          </a>
-        </ul>
-        <div class="card-body subheader">
-          <strong>brand</strong>
-        </div>
-        <ul class="list-group list-group-flush">
-          <a
-            *ngFor="let brand of ['arambh', 'new', 'design']"
-            class="list-group-item list-group-item-action"
-          >
-            <input
-              type="checkbox"
-              [ngModel]="selectedBrands.includes(brand)"
-              (ngModelChange)="toggleBrandSelection('brand', brand)"
-              [value]="brand"
-              id="{{ brand }}"
-              class="checkbox-style"
-            />
-            {{ brand.toUpperCase() }}
-          </a>
-        </ul>
-      </div>
-      <button (click)="filter()">Apply Filter</button>
-    </div>
-  </div>
-  <div class="product-list">
-    <div class="row">
-      <div
-        class="col-3 card text-center mb-3 m-5 p-0"
-        *ngFor="let product of products?.product"
-      >
-        <div class="card-body">
-          <div>
-            <img
-              routerLink="details"
-              [queryParams]="{ id: product?._id }"
-              src="https://dev-ms.taskopad.com/{{ product?.imageUrls[0] }}"
-              class="card-img-top"
-              alt="Product Image"
-            />
-          </div>
-          <div>
-            <h5
-              class="card-title"
-              routerLink="details"
-              [queryParams]="{ id: product?._id }"
-            >
-              {{ product?.name }}
-            </h5>
-            <p class="card-text">Rs. {{ product?.price }}</p>
-            <p class="card-text">{{ product?.description }}</p>
-            <p class="card-text">Brand: {{ product.brand }}</p>
-            <p class="card-text">Gender: {{ product.gender }}</p>
-            <a
-              routerLink="details"
-              [queryParams]="{ id: product?._id }"
-              class="btn btn-primary"
-              disabled="true"
-              >Details</a
-            >
+<app-navigation></app-navigation>
+<router-outlet> </router-outlet>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-3 pt-4">
+      <div class="filter">
+        <h2>Category</h2>
+        <div class="filter-category">
+          <div class="category-list" *ngFor="let cat of category">
+            <div class="image-content">
+              <input
+                type="checkbox"
+                [ngModel]="selectedCategory.includes(cat._id)"
+                (ngModelChange)="toggleBrandSelection('category', cat._id)"
+                [value]="cat._id"
+                id="{{ cat._id }}"
+                class="checkbox-style"
+              />
+              <p>{{ cat._id.toUpperCase() }}</p>
+            </div>
+            <div class="count">
+              <span>{{ cat.count }}</span>
+            </div>
           </div>
         </div>
       </div>
+      <div class="filter filter-range">
+        <h2>Filter</h2>
+        <div class="product-sort-by">
+          <label for="sort-by"><strong>Sort by : </strong></label>
+          <select [(ngModel)]="sortBy" class="sort">
+            <option value='{"price" : 1}'>Price, low to high</option>
+            <option value='{"price" : -1}'>Price, high to low</option>
+            <option value='{"name" : 1}'>Alphabetically, A-Z</option>
+            <option value='{"name" : -1}'>Alphabetically, Z-A</option>
+            <option value='{"createdAt" : 1}'>Date, old to new</option>
+            <option value='{"createdAt" : -1}' selected>
+              Date, new to old
+            </option>
+          </select>
+        </div>
+        <strong>Price</strong> : {{ minPrice }} - {{ maxPrice }}
+        <mat-slider min="0" max="5000">
+          <input [(ngModel)]="minPrice" name="mPrice" matSliderStartThumb />
+          <input [(ngModel)]="maxPrice" name="mxPrice" matSliderEndThumb />
+        </mat-slider>
+        <div class="filter-category">
+          <div class="fc-range"></div>
+          <div class="card">
+            <div class="card-body subheader">
+              <strong>Color</strong>
+            </div>
+            <ul class="list-group list-group-flush">
+              <a
+                *ngFor="let col of color"
+                class="list-group-item list-group-item-action"
+              >
+                <input
+                  type="checkbox"
+                  [ngModel]="selectedBrands.includes(col._id)"
+                  (ngModelChange)="toggleBrandSelection('color', col._id)"
+                  [value]="col._id"
+                  id="{{ col._id }}"
+                  name="color"
+                  class="checkbox-style"
+                />
+                {{ col.name.toUpperCase() }}
+              </a>
+            </ul>
+            <div class="card-body subheader">
+              <strong>brand</strong>
+            </div>
+            <ul class="list-group list-group-flush">
+              <a
+                *ngFor="let brand of ['arambh', 'new', 'design']"
+                class="list-group-item list-group-item-action"
+              >
+                <input
+                  type="checkbox"
+                  [ngModel]="selectedBrands.includes(brand)"
+                  (ngModelChange)="toggleBrandSelection('brand', brand)"
+                  [value]="brand"
+                  id="{{ brand }}"
+                  class="checkbox-style"
+                />
+                {{ brand.toUpperCase() }}
+              </a>
+            </ul>
+          </div>
+          <button (click)="filter()">Apply Filter</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <div class="product-list">
+        <div class="row">
+          <div
+            class="col-xl-3 col-lg-4 col-md-6"
+            *ngFor="let product of products?.product"
+          >
+            <div class="card text-center mb-3 p-0">
+              <div class="card-body">
+                <div>
+                  <img
+                    routerLink="details"
+                    [queryParams]="{ id: product?._id }"
+                    src="https://dev-ms.taskopad.com/{{
+                      product?.imageUrls[0]
+                    }}"
+                    class="card-img-top"
+                    alt="Product Image"
+                  />
+                </div>
+                <div style="padding-top: 20px">
+                  <h1
+                    class="card-title"
+                    routerLink="details"
+                    [queryParams]="{ id: product?._id }"
+                  >
+                    {{ product?.name }}
+                  </h1>
+                  <p class="card-text">
+                    <b>₹ {{ product?.price }}</b>
+                    <s style="color: red; padding-left: 10px"
+                      >₹{{ product?.mrp || 0 }}</s
+                    >
+                  </p>
+                  <a
+                    routerLink="details"
+                    [queryParams]="{ id: product?._id }"
+                    class="btn btn-primary"
+                    disabled="true"
+                    >Details</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagination">
+        <app-pagination
+          [count]="productCount"
+          [currentPage]="currentPage"
+          [itemsPerPage]="itemsPerPage"
+          (pageChange)="onPageChange($event)"
+        ></app-pagination>
+      </div>
     </div>
   </div>
-  <app-footer></app-footer>
 </div>
+<app-footer></app-footer>

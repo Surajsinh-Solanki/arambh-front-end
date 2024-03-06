@@ -4,7 +4,7 @@ import { interval, take, takeWhile } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class LocalStorageService {
+export class StorageService {
   setLocalStore(key: string, data: any) {
     return localStorage.setItem(key, data);
   }
@@ -40,10 +40,7 @@ export class LocalStorageService {
         this.clearLocalStorage(key);
       });
   }
-}
 
-export class SessionStorageService {
-  constructor() {}
   setSessionStore(key: string, data: any) {
     return sessionStorage.setItem(key, data);
   }

@@ -1,0 +1,39 @@
+<ul class="page">
+  <li
+    class="page__btn"
+    [class.active]="currentPage !== 1"
+    (click)="onPageChange(currentPage - 1)"
+  >
+    <span class="material-icons">chevron_left</span>
+  </li>
+
+  <ng-container *ngIf="currentPage > 3">
+    <li class="page__numbers" (click)="onPageChange(1)">1</li>
+    <li class="page__dots">...</li>
+  </ng-container>
+
+  <ng-container *ngFor="let pageNumber of displayedPages">
+    <li
+      class="page__numbers"
+      (click)="onPageChange(pageNumber)"
+      [class.active]="currentPage === pageNumber"
+    >
+      {{ pageNumber }}
+    </li>
+  </ng-container>
+
+  <ng-container *ngIf="currentPage < lastPage - 2">
+    <li class="page__dots">...</li>
+    <li class="page__numbers" (click)="onPageChange(lastPage)">
+      {{ lastPage }}
+    </li>
+  </ng-container>
+
+  <li
+    class="page__btn"
+    [class.active]="currentPage < lastPage"
+    (click)="onPageChange(currentPage + 1)"
+  >
+    <span class="material-icons">chevron_right</span>
+  </li>
+</ul>

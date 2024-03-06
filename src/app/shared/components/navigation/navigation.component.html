@@ -1,69 +1,82 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">Navbar</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/products"
-            >Home</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link active"
-            aria-current="page"
-            [routerLink]="['/products', { gender: 'male' }]"
-            >Men</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link active"
-            aria-current="page"
-            [routerLink]="['/products', { gender: 'female' }]"
-            >Women</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/cart"
-            >Cart</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/order"
-            >Order</a
-          >
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          [(ngModel)]="searchText"
-          name="searchText"
-          placeholder="name"
-        />
-        <button
-          class="btn btn-outline-success"
-          (click)="onSearchChange(searchText)"
-          type="submit"
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" routerLink="/">Navbar</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" routerLink="/products"
+          >Home</a
         >
-          Search
-        </button>
-      </form>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          [routerLink]="['/products', { gender: 'male' }]"
+          >Men</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          [routerLink]="['/products', { gender: 'female' }]"
+          >Women</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" routerLink="/cart"
+          >Cart</a
+        >
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+        [(ngModel)]="searchText"
+        name="searchText"
+        placeholder="name"
+      />
+      <button
+        class="btn btn-outline-success"
+        (click)="onSearchChange(searchText)"
+        type="submit"
+      >
+        Search
+      </button>
+    </form>
+    <div class="dropdown">
+      <div
+        class="user-avatar d-flex align-items-center"
+        data-toggle="dropdown"
+      >
+        <img
+          src="https://stage-ms.taskopad.com/uploads/667deb70-c4bf-11ee-87b9-55702e774c5b/man-user.png"
+          alt="User avatar"
+          class="d-none d-md-inline"
+        />
+        <span class="nav-item d-inline d-md-none">Profile</span>
+      </div>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" routerLink="profile">Profile</a></li>
+        <li><a class="dropdown-item" routerLink="/order">Order</a></li>
+        <li><a class="dropdown-item"  (click)="openLogoutDialog()">Logout</a></li>
+      </ul>
     </div>
   </div>
 </nav>
+<app-logout-dialog (confirmLogout)="confirmLogout($event)"></app-logout-dialog>

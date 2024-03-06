@@ -9,6 +9,7 @@ import { ProductCartComponent } from './page/product-cart/product-cart.component
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { OrderComponent } from './page/order/order.component';
+import { ProfileComponent } from './page/auth/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
   },
   {
     path: 'admin',

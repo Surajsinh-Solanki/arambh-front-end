@@ -1,66 +1,81 @@
-<div class="main-block">
-  <app-navigation></app-navigation>
-  <section id="product-info">
-    <div class="item-image-parent">
-      <div class="item-list-vertical" *ngFor="let image of product?.imageUrls">
-        <div class="thumb-box">
-          <img src="https://dev-ms.taskopad.com/{{ image }}" alt="thumbnail" />
-        </div>
-      </div>
-      <div class="item-image-main">
-        <img
-          src="https://dev-ms.taskopad.com/{{ product?.imageUrls[0] }}"
-          alt="default"
-        />
-      </div>
-    </div>
-
-    <div class="item-info-parent">
-      <!-- main info -->
-      <div class="main-info">
-        <h4>{{ product?.name }}</h4>
-        <div class="star-rating"></div>
-        <p>
-          Price: <span id="price">₹ {{ product?.price || 0 }}</span
-          >(MRP : ₹<s>{{ product?.mrp || 0 }}</s
-          >)
-        </p>
-      </div>
-      <!-- Choose -->
-      <div class="select-items">
-        <div class="change-color">
-          <label><b>Colour:</b> Black</label><br />
-        </div>
-
-        <div class="quantity">
-          <label for="quantity"><b>Quantity:</b></label>
-          <select [(ngModel)]="quantity" name="quantity">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-          </select>
-        </div>
-
-        <div class="change-size">
-          <label for="selectedSize"><b>Size:</b></label>
-          <select [(ngModel)]="selectedSize" name="selectedSize">
-            <option *ngFor="let ss of product?.sizeStock">{{ ss.size }}</option>
-          </select>
-        </div>
-
-        <div class="description">
-          <p>{{ product?.description }}</p>
-        </div>
-        <button
-          class="btn btn-warning btn-lg"
-          (click)="addToCart()"
-          [disabled]="quantity < 1 || !selectedSize"
+<app-navigation></app-navigation>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="item-image-parent">
+        <div
+          class="item-list-vertical"
+          *ngFor="let image of product?.imageUrls"
         >
-          Add to Cart
-        </button>
+          <div class="thumb-box">
+            <img
+              src="https://dev-ms.taskopad.com/{{ image }}"
+              alt="thumbnail"
+            />
+          </div>
+        </div>
+        <div class="item-image-main">
+          <img
+            src="https://dev-ms.taskopad.com/{{ product?.imageUrls[0] }}"
+            alt="default"
+          />
+        </div>
       </div>
     </div>
-  </section>
+    <div class="col-lg-6">
+      <section id="product-info">
+        <div class="item-info-parent">
+          <!-- main info -->
+          <div class="main-info">
+            <h4>{{ product?.name }}</h4>
+            <div class="star-rating"></div>
+            <p>
+              Price: <span id="price">₹ {{ product?.price || 0 }}</span
+              >(MRP : ₹<s>{{ product?.mrp || 0 }}</s
+              >)
+            </p>
+          </div>
+          <!-- Choose -->
+          <div class="select-items">
+            <div class="change-color">
+              <label><b>Colour:</b> Black</label><br />
+            </div>
+
+            <div class="quantity">
+              <label for="quantity"><b>Quantity:</b></label>
+              <select [(ngModel)]="quantity" name="quantity">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+              </select>
+            </div>
+
+            <div class="change-size">
+              <label for="selectedSize"><b>Size:</b></label>
+              <select [(ngModel)]="selectedSize" name="selectedSize">
+                <option *ngFor="let ss of product?.sizeStock">
+                  {{ ss.size }}
+                </option>
+              </select>
+            </div>
+
+            <div class="description">
+              <p>{{ product?.description }}</p>
+            </div>
+            <button
+              class="btn btn-warning btn-lg"
+              (click)="addToCart()"
+              [disabled]="quantity < 1 || !selectedSize"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<div class="main-block">
   <div class="rating">
     <div class="ratting">
       <div class="container">
@@ -187,8 +202,7 @@
           </div>
         </div>
       </div>
-
-      <app-footer></app-footer>
     </div>
   </div>
 </div>
+<app-footer></app-footer>

@@ -17,11 +17,14 @@ import { SharedModule } from './shared/shared.module';
 import { ProductCartComponent } from './page/product-cart/product-cart.component';
 import { RequestInterceptorInterceptor } from './shared/interceptor/request-interceptor.interceptor';
 import { OrderComponent } from './page/order/order.component';
+import { ErrorInterceptor } from './shared/interceptor/error-Interceptor.Interceptor';
+import { ProfileComponent } from './page/auth/profile/profile.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistrationComponent,
+    ProfileComponent,
     PageNotFoundComponent,
     DashboardComponent,
     AdminComponent,
@@ -39,7 +42,11 @@ import { OrderComponent } from './page/order/order.component';
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      closeButton: true,
+      timeOut: 15000, // 15 seconds
+      progressBar: true,
     }),
   ],
   exports: [],
@@ -47,6 +54,11 @@ import { OrderComponent } from './page/order/order.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true,
     },
   ],

@@ -1,12 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth/auth.service';
-import {
-  LocalStorageService,
-  SessionStorageService,
-} from 'src/app/service/storage-service/storage.service';
+import { StorageService } from 'src/app/service/storage-service/storage.service';
 import { Login } from 'src/app/shared/interface/user.interface';
 
 @Component({
@@ -22,8 +19,7 @@ export class LoginComponent {
     private toast: ToastrService,
     private service: AuthService,
     private router: Router,
-    private localStorage: LocalStorageService,
-    private sessionStorage: SessionStorageService,
+    private storage: StorageService,
   ) {}
   loginForm = this.formBuilder.group({
     emailOrMobile: this.formBuilder.control('', [Validators.required]),
@@ -36,17 +32,11 @@ export class LoginComponent {
         (res: any) => {
           if (res.result?.token) {
             if (this.rememberMe) {
-              this.localStorage.setLocalStore(
-                'authorization',
-                res.result?.token,
-              );
-              this.localStorage.setLocalStore('isUserLoggedIn', 'true');
+              this.storage.setLocalStore('authorization', res.result?.token);
+              this.storage.setLocalStore('isUserLoggedIn', 'true');
             } else {
-              this.sessionStorage.setSessionStore(
-                'authorization',
-                res.result?.token,
-              );
-              this.sessionStorage.setSessionStore('isUserLoggedIn', 'true');
+              this.storage.setSessionStore('authorization', res.result?.token);
+              this.storage.setSessionStore('isUserLoggedIn', 'true');
             }
           }
           this.toast.success('Login Success.');
@@ -54,9 +44,7 @@ export class LoginComponent {
         },
         (error) => {
           if (error.error.code) {
-            this.toast.error(error.error.msg);
-          } else {
-            this.toast.error('An error occurred. Please try again later.');
+            this.toast.error(error.error.msg || error.error.error);
           }
         },
       );

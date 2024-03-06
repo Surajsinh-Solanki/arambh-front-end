@@ -14,15 +14,18 @@ import { Utils } from 'src/app/shared/global/utils';
 export class ProductsComponent {
   query: any = {};
   products: any;
+  productCount: number = 0;
   category: any;
   color: any;
   brand: any;
-  minPrice: number = 100;
-  maxPrice: number = 2000;
+  minPrice: number = 0;
+  maxPrice: number = 5000;
   selectedColors: string[] = [];
   selectedBrands: string[] = [];
   selectedCategory: string[] = [];
   sortBy: string = '{"createdAt" : -1}';
+  currentPage: number = 1;
+  itemsPerPage: number = 12;
 
   constructor(
     private service: ProductService,
@@ -33,7 +36,7 @@ export class ProductsComponent {
 
   async ngOnInit() {
     const query = Utils.getAllQueryParameters();
-    this.getAllProducts(query);
+    // this.getAllProducts(query);
     this.getCategoryCount();
     this.getColorCount();
     this.getBrandCount();
@@ -51,11 +54,13 @@ export class ProductsComponent {
   }
 
   async getAllProducts(query: any) {
+    query.page = this.currentPage;
+    query.limit = this.itemsPerPage;
     (await this.service.getAllProduct(query)).subscribe(
       (res: any) => {
         this.products = res?.result;
+        this.productCount = res?.result.count;
         console.log(this.products);
-        this.toast.success('All Products Success.');
       },
       (error) => {
         if (error.error.code) {
@@ -71,7 +76,6 @@ export class ProductsComponent {
     (await this.service.getCategoryCount()).subscribe(
       (res: any) => {
         this.category = res?.result;
-        console.log('category', this.category);
       },
       (error) => {
         if (error.error.code) {
@@ -93,7 +97,6 @@ export class ProductsComponent {
           return { ...item, name };
         });
         this.color = colorDataWithNames;
-        console.log('color', colorDataWithNames);
       },
       (error) => {
         if (error.error.code) {
@@ -109,7 +112,6 @@ export class ProductsComponent {
     (await this.service.getBrandCount()).subscribe(
       (res: any) => {
         this.brand = res?.result;
-        console.log('brand', this.brand);
       },
       (error) => {
         if (error.error.code) {
@@ -155,6 +157,8 @@ export class ProductsComponent {
       category?: string;
       brand?: string;
       sort?: string;
+      page?: number;
+      limit?: number;
     } = { minPrice: this.minPrice, maxPrice: this.maxPrice, sort: this.sortBy };
     if (this.selectedColors.length) {
       filter.color = JSON.stringify(this.selectedColors);
@@ -169,5 +173,8 @@ export class ProductsComponent {
     await this.getAllProducts(filter);
   }
 
-  priceChange() {}
+  async onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+    await this.getAllProducts(this.query);
+  }
 }
