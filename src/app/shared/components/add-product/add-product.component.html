@@ -147,6 +147,25 @@
     </div>
 
     <div>
+      <label for="material" class="form-label">Material:</label>
+      <input
+        type="text"
+        id="material"
+        formControlName="material"
+        class="form-control"
+        required
+      />
+      <div
+        *ngIf="
+          productForm.get('material')?.invalid && productForm.get('material')?.touched
+        "
+        class="error-message"
+      >
+        <span class="error-message">Material is required.</span>
+      </div>
+    </div>
+
+    <div>
       <label for="color" class="form-label">Color:</label>
       <select
         id="color"

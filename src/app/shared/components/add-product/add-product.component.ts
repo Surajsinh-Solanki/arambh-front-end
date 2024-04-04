@@ -31,6 +31,7 @@ export class AddProductComponent {
       Validators.min(0),
     ]),
     brand: this.formBuilder.control('', [Validators.required]),
+    material : this.formBuilder.control('', [Validators.required]),
     gender: this.formBuilder.control('', [Validators.required]),
     color: this.formBuilder.control('', [Validators.required]),
     images: this.formBuilder.array([], [Validators.required]),
@@ -48,6 +49,7 @@ export class AddProductComponent {
       const category: any = this.productForm.value.category;
       const price: any = this.productForm.value.price;
       const brand: any = this.productForm.value.brand;
+      const material: any = this.productForm.value.material;
       const gender: any = this.productForm.value.gender;
       const color: string = this.selectedColor;
       const mrp: any = this.productForm.value.mrp;
@@ -60,6 +62,7 @@ export class AddProductComponent {
       formData.append('category', category);
       formData.append('price', price.toString());
       formData.append('brand', brand);
+      formData.append('material', material);
       formData.append('gender', gender);
       formData.append('color', color);
       formData.append('gst', gst);
