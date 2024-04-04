@@ -1,202 +1,168 @@
 <app-navigation></app-navigation>
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-6">
-      <div class="item-image-parent">
-        <div
-          class="item-list-vertical"
-          *ngFor="let image of product?.imageUrls"
-        >
-          <div class="thumb-box">
-            <img
-              src="https://dev-ms.taskopad.com/{{ image }}"
-              alt="thumbnail"
-            />
+  <section class="py-5">
+    <div class="container-fluid">
+      <div class="row gx-5">
+        <aside class="col-lg-6">
+          <div class="border rounded-4 mb-6   d-flex justify-content-center">
+            <img style="max-width: 100%; max-height: 100vh; margin: auto" class=""
+              src="https://dev-ms.taskopad.com/{{ product?.imageUrls[0] }}" />
           </div>
-        </div>
-        <div class="item-image-main">
-          <img
-            src="https://dev-ms.taskopad.com/{{ product?.imageUrls[0] }}"
-            alt="default"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-6">
-      <section id="product-info">
-        <div class="item-info-parent">
-          <!-- main info -->
-          <div class="main-info">
-            <h4>{{ product?.name }}</h4>
-            <div class="star-rating"></div>
+          <div class="d-flex justify-content-center mb-6">
+            <div *ngFor="let image of product?.imageUrls">
+              <img width="60" height="60" class="rounded-2" src="https://dev-ms.taskopad.com/{{ image }}" />
+            </div>
+          </div>
+        </aside>
+        <main class="col-lg-6">
+          <div class="ps-lg-3">
+            <span class="title text-dark h3">
+              {{ product?.name }}
+            </span>
+            <div class="d-flex flex-row my-3">
+              <div class="text-warning mb-1 me-2">
+                <ng-container *ngFor="let _ of fullStarArray">
+                  <i class="fa fa-star"></i>
+                </ng-container>
+                <i *ngIf="hasHalfStar" class="fas fa-star-half-alt"></i>
+                <ng-container *ngFor="let _ of emptyStarArray">
+                  <i class="far fa-star"></i>
+                </ng-container>
+
+                <span class="ms-1">{{ globalValue }}</span>
+              </div>
+
+              <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i></span>
+              <span class="text-success ms-2">In stock</span>
+            </div>
+            <div class="mb-3">
+              <span class="h5">₹ {{ product?.price || 0 }}</span>
+              <span class="text-muted">/per pice (mrp : ₹<s>{{ product?.mrp || 0 }}</s>)</span>
+            </div>
+
             <p>
-              Price: <span id="price">₹ {{ product?.price || 0 }}</span
-              >(MRP : ₹<s>{{ product?.mrp || 0 }}</s
-              >)
+              {{ product?.description }}
             </p>
-          </div>
-          <!-- Choose -->
-          <div class="select-items">
-            <div class="change-color">
-              <label><b>Colour:</b> Black</label><br />
-            </div>
+            <div class="row">
+              <dt class="col-3">Type:</dt>
+              <dd class="col-9">Regular</dd>
 
-            <div class="quantity">
-              <label for="quantity"><b>Quantity:</b></label>
-              <select [(ngModel)]="quantity" name="quantity">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-              </select>
-            </div>
+              <dt class="col-3">Color</dt>
+              <dd class="col-9">Brown</dd>
 
-            <div class="change-size">
-              <label for="selectedSize"><b>Size:</b></label>
-              <select [(ngModel)]="selectedSize" name="selectedSize">
-                <option *ngFor="let ss of product?.sizeStock">
-                  {{ ss.size }}
-                </option>
-              </select>
-            </div>
+              <dt class="col-3">Material</dt>
+              <dd class="col-9">{{product?.material}}</dd>
 
-            <div class="description">
-              <p>{{ product?.description }}</p>
+              <dt class="col-3">Brand</dt>
+              <dd class="col-9">{{ product?.brand }}</dd>
             </div>
-            <button
-              class="btn btn-warning btn-lg"
-              (click)="addToCart()"
-              [disabled]="quantity < 1 || !selectedSize"
-            >
+            <hr />
+            <div class="row mb-4">
+              <div class="col-md-4 col-6">
+                <label class="mb-2">Size : </label>
+                <select class="form-select border border-secondary" [(ngModel)]="selectedSize" name="selectedSize"
+                  style="height: 35px">
+                  <option></option>
+                  <option *ngFor="let ss of product?.sizeStock">
+                    {{ ss.size }}
+                  </option>
+                </select>
+              </div>
+              <!-- col.// -->
+              <div class="col-md-4 col-6 mb-3">
+                <label class="mb-2">Quantity : </label>
+
+                <select class="form-select border border-secondary" style="height: 35px" [(ngModel)]="quantity"
+                  name="quantity">
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-warning btn-lg" (click)="addToCart()" [disabled]="quantity < 1">
               Add to Cart
             </button>
           </div>
-        </div>
-      </section>
-    </div>
-  </div>
-</div>
-<div class="main-block">
-  <div class="rating">
-    <div class="ratting">
-      <div class="container">
-        <div class="chart">
-          <div class="rate-box" *ngFor="let rating of [5, 4, 3, 2, 1]">
-            <span class="value">{{ rating }}</span>
-            <div class="progress-bar">
-              <span
-                class="progress"
-                [style.background-color]="getProgressBarColor(rating)"
-                [style.width.%]="getProgressBarWidth(reviews[rating])"
-              ></span>
-            </div>
-            <span class="count">{{ reviews[rating] }}</span>
-          </div>
-
-          <div class="global">
-            <span class="global-value">{{ globalValue }}</span>
-            <div class="rating-icons">
-              <span class="one"
-                ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i
-              ></span>
-              <span
-                class="two"
-                [style.background]="
-                  'linear-gradient(to right, #66bb6a ' +
-                  average * 20 +
-                  '%, transparent 0%)'
-                "
-                ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i
-              ></span>
-            </div>
-            <span class="total-reviews">{{ totalReviews }}</span>
-          </div>
-        </div>
+        </main>
       </div>
     </div>
-    <div class="reviews">
-      <div class="testimonial-heading">
-        <span>Comments</span>
-        <h4>Clients Says</h4>
-      </div>
-      <div>
-        <div class="container">
-          <div class="reviews">
-            <div class="input-container">
-              <div class="input">
-                <div class="inputbox">
-                  <textarea
-                    type="text"
-                    class="reviewinp"
-                    placeholder="Write a review"
-                    [(ngModel)]="comment"
-                    name="comment"
-                  ></textarea>
-                </div>
-                <div class="stars">
-                  <div class="star1" (click)="rateStar(1)">
-                    <i class="far fa-star" [ngClass]="{ fas: star >= 1 }"></i>
+  </section>
+  <div class="main-block">
+    <div class="rating">
+      <div class="reviews">
+        <div class="testimonial-heading">
+          <span>Comments</span>
+          <h4>Clients Says</h4>
+        </div>
+        <div>
+          <div class="container">
+            <div class="reviews">
+              <div class="input-container">
+                <div class="input">
+                  <div class="inputbox">
+                    <textarea type="text" class="reviewinp" placeholder="Write a review" [(ngModel)]="comment"
+                      name="comment"></textarea>
                   </div>
-                  <div class="star2" (click)="rateStar(2)">
-                    <i class="far fa-star" [ngClass]="{ fas: star >= 2 }"></i>
+                  <div class="stars">
+                    <div class="star1" (click)="rateStar(1)">
+                      <i class="far fa-star" [ngClass]="{ fas: star >= 1 }"></i>
+                    </div>
+                    <div class="star2" (click)="rateStar(2)">
+                      <i class="far fa-star" [ngClass]="{ fas: star >= 2 }"></i>
+                    </div>
+                    <div class="star3" (click)="rateStar(3)">
+                      <i class="far fa-star" [ngClass]="{ fas: star >= 3 }"></i>
+                    </div>
+                    <div class="star4" (click)="rateStar(4)">
+                      <i class="far fa-star" [ngClass]="{ fas: star >= 4 }"></i>
+                    </div>
+                    <div class="star5" (click)="rateStar(5)">
+                      <i class="far fa-star" [ngClass]="{ fas: star >= 5 }"></i>
+                    </div>
                   </div>
-                  <div class="star3" (click)="rateStar(3)">
-                    <i class="far fa-star" [ngClass]="{ fas: star >= 3 }"></i>
+                  <div class="submitbtn">
+                    <button class="submit" (click)="addReview()">
+                      Submit Review
+                    </button>
                   </div>
-                  <div class="star4" (click)="rateStar(4)">
-                    <i class="far fa-star" [ngClass]="{ fas: star >= 4 }"></i>
-                  </div>
-                  <div class="star5" (click)="rateStar(5)">
-                    <i class="far fa-star" [ngClass]="{ fas: star >= 5 }"></i>
-                  </div>
-                </div>
-                <div class="submitbtn">
-                  <button class="submit" (click)="addReview()">
-                    Submit Review
-                  </button>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="testimonial-box-container">
-            <div class="testimonial-box" *ngFor="let rev of review">
-              <!--top------------------------->
-              <div class="box-top">
-                <!--profile----->
-                <div class="profile">
-                  <!--img---->
-                  <div class="profile-img">
-                    <img
-                      src="https://dev-ms.taskopad.com/uploads/93f4d1a0-a49d-11ee-abe9-c369a2df4928/1703670719418"
-                    />
+            <div class="testimonial-box-container">
+              <div class="testimonial-box" *ngFor="let rev of review">
+                <!--top------------------------->
+                <div class="box-top">
+                  <!--profile----->
+                  <div class="profile">
+                    <!--img---->
+                    <div class="profile-img">
+                      <img
+                        src="https://dev-ms.taskopad.com/uploads/93f4d1a0-a49d-11ee-abe9-c369a2df4928/1703670719418" />
+                    </div>
+                    <!--name-and-username-->
+                    <div class="name-user">
+                      <strong>{{ rev.user.firstName }}
+                        {{ rev.user.lastName }}</strong>
+                    </div>
                   </div>
-                  <!--name-and-username-->
-                  <div class="name-user">
-                    <strong
-                      >{{ rev.user.firstName }} {{ rev.user.lastName }}</strong
-                    >
+                  <!--reviews------>
+                  <div class="reviews">
+                    <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+                      <i class="fas fa-star" [ngClass]="{
+                          far: i >= rev.rating,
+                          fas: i < rev.rating
+                        }"></i>
+                    </ng-container>
                   </div>
                 </div>
-                <!--reviews------>
-                <div class="reviews">
-                  <ng-container
-                    *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
-                  >
-                    <i
-                      class="fas fa-star"
-                      [ngClass]="{ far: i >= rev.rating, fas: i < rev.rating }"
-                    ></i>
-                  </ng-container>
+                <!--Comments---------------------------------------->
+                <div class="client-comment">
+                  <p>
+                    {{ rev.comment }}
+                  </p>
                 </div>
-              </div>
-              <!--Comments---------------------------------------->
-              <div class="client-comment">
-                <p>
-                  {{ rev.comment }}
-                </p>
               </div>
             </div>
           </div>

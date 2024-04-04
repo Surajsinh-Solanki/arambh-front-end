@@ -43,7 +43,7 @@
                 <strong> Size {{ cartItem.size }}</strong>
               </p>
               <p>Product Code - {{ cartItem.product._id }}</p>
-              <p>Product Code - {{ cartItem.status }}</p>
+              <p>Product status - {{ cartItem.status }}</p>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
         <div class="subtotal">
           {{ cartItem.quantity * cartItem.product.price }}
         </div>
-        <div class="remove">
+        <div class="remove" [hidden]="cartItem.status === 'canceled'">
           <button (click)="cancelOrder(cartItem._id)">cancel</button>
         </div>
       </div>

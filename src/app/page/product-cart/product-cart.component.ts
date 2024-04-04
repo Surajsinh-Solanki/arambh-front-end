@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { CartService } from 'src/app/service/product/cart.service';
 import { Utils } from 'src/app/shared/global/utils';
 declare var Cashfree: any;
@@ -18,11 +20,31 @@ export class ProductCartComponent {
   count: number = 0;
   totalMrp: number = 0;
   totalPrice: number = 0;
+  profile: any = {};
 
   constructor(
+    private formBuilder: FormBuilder,
     private cartService: CartService,
     private toast: ToastrService,
+    private authService: AuthService,
   ) {}
+
+  profileForm: FormGroup = this.formBuilder.group({
+    billingAddress: this.formBuilder.group({
+      address: ['', Validators.required],
+      street: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zipCode: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+    }),
+    shippingAddress: this.formBuilder.group({
+      address: ['', Validators.required],
+      street: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zipCode: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+    }),
+  });
 
   ngOnInit() {
     this.cartService.GetUserCartProduct().subscribe(
@@ -33,6 +55,7 @@ export class ProductCartComponent {
           this.totalMrp += (product.product.mrp || 0) * product.quantity;
           this.totalPrice += (product.product.price || 0) * product.quantity;
         }
+        this.getProfile();
       },
       (error) => {
         if (error.error.code) {
@@ -47,17 +70,14 @@ export class ProductCartComponent {
   checkout(data: any) {
     this.cartService.checkout(data).subscribe(async (order: any) => {
       this.cartService.createOrder(data).subscribe();
-      let checkoutOptions = {
-        paymentSessionId: order,
-        returnUrl: 'http://localhost:4000/cart',
-      };
-      cashfree.checkout(checkoutOptions);
+      this.updateProfile();
+      // let checkoutOptions = {
+      //   paymentSessionId: order,
+      //   returnUrl: 'http://localhost:4000/cart',
+      // };
+      // cashfree.checkout(checkoutOptions);
     });
   }
-
-  applyPromoCode() {}
-
-  getTotal() {}
 
   removeCartItem(id: string) {
     this.cartService.deleteCartProduct(id).subscribe(
@@ -78,10 +98,12 @@ export class ProductCartComponent {
     );
   }
 
-  updateCartItemQuantity(event: Event, id: string) {
-    const newQuantity = (event.target as HTMLInputElement)?.value;
+  updateCartItemQuantity(id: string, value: number) {
+    if (value < 1) {
+      return; // Prevent decreasing quantity below 1
+    }
     this.cartService
-      .updateCartProduct({ quantity: Utils.toNumber(newQuantity) }, id)
+      .updateCartProduct({ quantity: Utils.toNumber(value) }, id)
       .subscribe(
         (res: any) => {
           this.totalMrp = 0;
@@ -96,5 +118,73 @@ export class ProductCartComponent {
           }
         },
       );
+  }
+
+  getProfile() {
+    this.authService.GetById().subscribe(
+      (res: any) => {
+        this.profile = res?.result;
+        this.profileForm.patchValue(this.profile);
+      },
+      (error) => {
+        if (error.error.code) {
+          this.toast.error(error.error.msg);
+        } else {
+          this.toast.error('An error occurred. Please try again later.');
+        }
+      },
+    );
+  }
+
+  updateProfile() {
+    if (this.profileForm.valid) {
+      const {
+        billingAddress: {
+          address: billingAddress,
+          street: billingStreet,
+          city: billingCity,
+          state: billingState,
+          zipCode: billingZipCode,
+        },
+        shippingAddress: {
+          address: shippingAddress,
+          street: shippingStreet,
+          city: shippingCity,
+          state: shippingState,
+          zipCode: shippingZipCode,
+        },
+      } = this.profileForm.value;
+      const profile = {
+        firstName: this.profile.firstName,
+        lastName: this.profile.lastName,
+        gender: this.profile.gender,
+        billingAddress: {
+          address: billingAddress,
+          street: billingStreet,
+          city: billingCity,
+          state: billingState,
+          zipCode: billingZipCode,
+        },
+        shippingAddress: {
+          address: shippingAddress,
+          street: shippingStreet,
+          city: shippingCity,
+          state: shippingState,
+          zipCode: shippingZipCode,
+        },
+      };
+      this.authService.updateUser(profile).subscribe(
+        () => {
+          this.getProfile();
+        },
+        (error) => {
+          if (error.error.code) {
+            this.toast.error(error.error.msg);
+          } else {
+            this.toast.error('An error occurred. Please try again later.');
+          }
+        },
+      );
+    }
   }
 }

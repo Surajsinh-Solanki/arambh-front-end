@@ -9,6 +9,8 @@ import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [ProductsComponent, ProductDetailComponent],
+  providers: [],
+  exports: [],
   imports: [
     CommonModule,
     ProductRoutingModule,
@@ -16,7 +18,5 @@ import { MatSliderModule } from '@angular/material/slider';
     FormsModule,
     MatSliderModule,
   ],
-  providers: [],
-  exports: [],
 })
 export class ProductModule {}

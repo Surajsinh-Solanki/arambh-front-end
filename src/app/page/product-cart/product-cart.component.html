@@ -1,113 +1,159 @@
-<div class="main-block">
-  <app-navigation></app-navigation>
+<app-navigation></app-navigation>
+
+<div class="main">
+  <header>
+    <h3>Checkout</h3>
+  </header>
+
   <main>
-    <div class="basket">
-      <div class="basket-module">
-        <label for="promo-code">Enter a promotional code</label>
-        <input
-          id="promo-code"
-          type="text"
-          name="promo-code"
-          maxlength="5"
-          class="promo-code-field"
-        />
-        <button class="promo-code-cta" (click)="applyPromoCode()">Apply</button>
-      </div>
-      <div class="basket-labels">
-        <ul>
-          <li class="item item-heading">Item</li>
-          <li class="price">Price</li>
-          <li class="price">Mrp</li>
-          <li class="quantity">Quantity</li>
-          <li class="subtotal">Subtotal</li>
-        </ul>
-      </div>
-      <div *ngFor="let cartItem of cartProducts" class="basket-product">
-        <div class="item">
-          <div class="product-image">
-            <img
-              src="https://dev-ms.taskopad.com/{{
+
+    <section class="checkout-details">
+      <div class="checkout-details-inner">
+        <table class="">
+          <thead>
+            <tr>
+              <th style="width: 300px;">Item</th>
+              <th style="width: 100px;">Name</th>
+              <th style="width: 100px;">Quantity</th>
+              <th style="width: 100px;">Price</th>
+              <th style="width: 100px;">Subtotal</th>
+              <th style="width: 40px"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cartItem of cartProducts">
+              <td class="img-td"><img class="prod-img" src="https://dev-ms.taskopad.com/{{
                 cartItem.product.imageUrls[0]
-              }}"
-              routerLink="/products/details"
-              [queryParams]="{ id: cartItem.product._id }"
-              alt="Placeholder Image"
-              class="product-frame"
-            />
+              }}" routerLink="/products/details" [queryParams]="{ id: cartItem.product._id }" alt="Placeholder Image">
+              </td>
+              <td><label class="prod-name">{{ cartItem.product.name }}</label></td>
+              <td>
+                <div class="card-wheel">
+                  <button (click)=" updateCartItemQuantity(cartItem._id , cartItem.quantity - 1 )">-</button>
+                  <span>{{ cartItem.quantity }}</span>
+                  <button (click)=" updateCartItemQuantity(cartItem._id , cartItem.quantity + 1 )">+</button>
+                </div>
+              </td>
+              <td>₹{{ cartItem.product.price || 0 }} <span>₹<s>{{ cartItem.product.mrp || 0 }}</s></span></td>
+              <td>₹{{ cartItem.quantity * cartItem.product.price }}</td>
+              <td>
+                <i class="fa fa-trash" (click)="removeCartItem(cartItem._id)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="checkout-total">
+          <div class="checkout-total-details">
+            <h6>Shipping</h6>
+            <p>₹{{totalPrice < 500 ? 49 : 0}}</p>
           </div>
-          <div class="product-details">
-            <h1>
-              <strong
-                ><span class="item-quantity">{{ cartItem.quantity }}</span> x
-              </strong>
-              {{ cartItem.product.name }}
-            </h1>
-            <div class="d-flex">
-              <span
-                class="color-box"
-                [ngStyle]="{ 'background-color': cartItem.product.color }"
-              ></span>
-              <p>
-                <strong> Size {{ cartItem.size }}</strong>
-              </p>
-              <p>Product Code - {{ cartItem.product._id }}</p>
+          <div class="checkout-total-details">
+            <h6>Mrp</h6>
+            <p>₹{{totalMrp}}</p>
+          </div>
+          <div class="checkout-total-details">
+            <h6>Discount</h6>
+            <p>₹{{totalMrp - totalPrice}}</p>
+          </div>
+          <div class="checkout-total checkout-total-details">
+            <h6>Total</h6>
+            <p>₹{{totalPrice}}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="checkout-form">
+      <form [formGroup]="profileForm" method="get">
+        <h6>Billing address</h6>
+        <div formGroupName="billingAddress">
+          <div class="form-control">
+            <label for="checkout-address">Address</label>
+            <div>
+              <span class="fa fa-home"></span>
+              <input type="text" formControlName="address" placeholder="Your address...">
+            </div>
+          </div>
+          <div class="form-control">
+            <label for="checkout-address">Street</label>
+            <div>
+              <span class="fa fa-road"></span>
+              <input type="text" formControlName="street" placeholder="Your street...">
+            </div>
+          </div>
+          <div class="form-control">
+            <label for="checkout-city">City</label>
+            <div>
+              <span class="fa fa-building"></span>
+              <input type="text" formControlName="city" placeholder="Your city...">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-control">
+              <label for="checkout-country">State</label>
+              <div>
+                <span class="fa fa-globe"></span>
+                <input type="text" formControlName="state" placeholder="Your State...">
+              </div>
+            </div>
+            <div class="form-control">
+              <label for="checkout-postal">Postal code</label>
+              <div>
+                <span class="fa fa-archive"></span>
+                <input type="numeric" formControlName="zipCode" placeholder="Your postal code...">
+              </div>
             </div>
           </div>
         </div>
-        <div class="price">{{ cartItem.product.price || 0 }}</div>
-        <div class="price">{{ cartItem.product.mrp || 0 }}</div>
-        <div class="quantity">
-          <input
-            type="number"
-            value="{{ cartItem.quantity }}"
-            min="1"
-            class="quantity-field"
-            (change)="updateCartItemQuantity($event, cartItem._id)"
-          />
-        </div>
-        <div class="subtotal">
-          {{ cartItem.quantity * cartItem.product.price }}
-        </div>
-        <div class="remove">
-          <button (click)="removeCartItem(cartItem._id)">Remove</button>
-        </div>
-      </div>
-    </div>
-    <aside>
-      <div class="summary">
-        <div class="summary-total-items">
-          <span class="total-items"></span> Payment
-        </div>
-        <div class="summary-subtotal">
-          <div class="subtotal-title">Total MRP</div>
-          <div class="subtotal-value final-value" id="basket-subtotal">
-            {{ totalMrp }}
+        <br>
+        <h6>Shipping address</h6>
+        <div formGroupName="shippingAddress">
+          <div class="form-control">
+            <label for="checkout-address">Address</label>
+            <div>
+              <span class="fa fa-home"></span>
+              <input type="text" formControlName="address" placeholder="Your address...">
+            </div>
           </div>
-          <div class="subtotal-title">- discount</div>
-          <div class="subtotal-value final-value" id="basket-subtotal">
-            {{ totalMrp - totalPrice }}
+          <div class="form-control">
+            <label for="checkout-address">Street</label>
+            <div>
+              <span class="fa fa-road"></span>
+              <input type="text" formControlName="street" placeholder="Your street...">
+            </div>
           </div>
-          <div class="summary-promo hide">
-            <div class="promo-title">Promotion</div>
-            <div class="promo-value final-value" id="basket-promo"></div>
+          <div class="form-control">
+            <label for="checkout-city">City</label>
+            <div>
+              <span class="fa fa-building"></span>
+              <input type="text" formControlName="city" placeholder="Your city...">
+            </div>
           </div>
-        </div>
-        <div class="summary-total">
-          <div class="total-title">Total</div>
-          <div class="total-value final-value" id="basket-total">
-            {{ totalPrice }}
+          <div class="form-group">
+            <div class="form-control">
+              <label for="checkout-country">State</label>
+              <div>
+                <span class="fa fa-globe"></span>
+                <input type="text" formControlName="state" placeholder="Your State...">
+              </div>
+            </div>
+            <div class="form-control">
+              <label for="checkout-postal">Postal code</label>
+              <div>
+                <span class="fa fa-archive"></span>
+                <input type="numeric" formControlName="zipCode" placeholder="Your postal code...">
+              </div>
+            </div>
           </div>
         </div>
-        <div class="summary-checkout">
-          <button
-            class="btn btn-success btn-lg"
-            (click)="checkout(cartProducts)"
-          >
-            Checkout
-          </button>
+        <div class="form-control-btn">
+          <button (click)="checkout(cartProducts)" [disabled]="!profileForm.valid">Checkout</button>
         </div>
-      </div>
-    </aside>
+      </form>
+    </section>
+
   </main>
-  <app-footer></app-footer>
 </div>
+<app-footer></app-footer>
