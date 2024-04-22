@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { CartService } from 'src/app/service/product/cart.service';
 import { Utils } from 'src/app/shared/global/utils';
+import { environment } from 'src/environments/environment';
 declare var Cashfree: any;
 
 const cashfree = Cashfree({
@@ -71,11 +72,11 @@ export class ProductCartComponent {
     this.cartService.checkout(data).subscribe(async (order: any) => {
       this.cartService.createOrder(data).subscribe();
       this.updateProfile();
-      // let checkoutOptions = {
-      //   paymentSessionId: order,
-      //   returnUrl: 'http://localhost:4000/cart',
-      // };
-      // cashfree.checkout(checkoutOptions);
+      let checkoutOptions = {
+        paymentSessionId: order,
+        returnUrl: environment.RETURN_URL,
+      };
+      cashfree.checkout(checkoutOptions);
     });
   }
 
