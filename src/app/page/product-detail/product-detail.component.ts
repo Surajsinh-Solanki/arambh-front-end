@@ -5,6 +5,7 @@ import { CartService } from 'src/app/service/product/cart.service';
 import { ProductService } from 'src/app/service/product/product.service';
 import { RatingService } from 'src/app/service/product/rating.service';
 import { Utils } from 'src/app/shared/global/utils';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-detail',
@@ -16,6 +17,7 @@ export class ProductDetailComponent {
   review: any;
   selectedSize: string = '';
   quantity: number = 0;
+  media_url = environment.MEDIA_URL;
 
   //rating
   globalValue = '0.0';

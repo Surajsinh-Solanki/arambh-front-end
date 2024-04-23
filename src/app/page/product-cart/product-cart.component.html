@@ -22,7 +22,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let cartItem of cartProducts">
-              <td class="img-td"><img class="prod-img" src="https://dev-ms.taskopad.com/{{
+              <td class="img-td"><img class="prod-img" src="{{media_url}}{{
                 cartItem.product.imageUrls[0]
               }}" routerLink="/products/details" [queryParams]="{ id: cartItem.product._id }" alt="Placeholder Image">
               </td>

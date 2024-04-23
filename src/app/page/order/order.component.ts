@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { OrderService } from 'src/app/service/product/order.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-order',
@@ -9,6 +10,7 @@ import { OrderService } from 'src/app/service/product/order.service';
 })
 export class OrderComponent {
   orders: any[] = [];
+  media_url = environment.MEDIA_URL
 
   constructor(
     private orderService: OrderService,

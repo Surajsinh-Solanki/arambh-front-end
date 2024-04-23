@@ -22,6 +22,7 @@ export class ProductCartComponent {
   totalMrp: number = 0;
   totalPrice: number = 0;
   profile: any = {};
+  media_url = environment.MEDIA_URL;
 
   constructor(
     private formBuilder: FormBuilder,

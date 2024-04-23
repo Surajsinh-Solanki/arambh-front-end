@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/service/product/product.service';
 import { SearchTextService } from 'src/app/service/shared/search-text.service';
 import { colorName } from 'src/app/shared/global/color-name';
 import { Utils } from 'src/app/shared/global/utils';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-products',
@@ -12,6 +13,7 @@ import { Utils } from 'src/app/shared/global/utils';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent {
+  media_url = environment.MEDIA_URL;
   query: any = {};
   products: any;
   productCount: number = 0;
