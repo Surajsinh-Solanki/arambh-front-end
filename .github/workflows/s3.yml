@@ -18,6 +18,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '18'
+      - name: Check AWS_S3_BUCKET value
+        run: echo ${{ secrets.AWS_S3_BUCKET }}
       
       - name: Install dependencies
         run: npm install
