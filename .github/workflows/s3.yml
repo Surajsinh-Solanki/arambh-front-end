@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '18'
       - name: Check AWS_S3_BUCKET value
-        run: echo "The value of AWS_S3_BUCKET is = ${{ secrets.AWS_S3_BUCKET }}"
+        run: echo "The value of AWS_S3_BUCKET = ${{ secrets.AWS_S3_BUCKET }}"
       
       - name: Install dependencies
         run: npm install
