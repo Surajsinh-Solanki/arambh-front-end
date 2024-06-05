@@ -46,6 +46,11 @@ export class ProductDetailComponent {
           this.product = res?.result;
           if (this.product._id) {
             this.getProductRating(this.product._id);
+            this.selectedSize = this.product.sizeStock[0].size;
+            console.log(
+              '😊 >> ProductDetailComponent >> ngOnInit >> this.selectedSize:',
+              this.selectedSize,
+            );
           }
         },
         (error) => {
@@ -155,5 +160,19 @@ export class ProductDetailComponent {
           }
         },
       );
+  }
+
+  selectSize(size: string): void {
+    this.selectedSize = size;
+  }
+
+  incrementQuantity(): void {
+    this.quantity++;
+  }
+
+  decrementQuantity(): void {
+    if (this.quantity > 0) {
+      this.quantity--;
+    }
   }
 }

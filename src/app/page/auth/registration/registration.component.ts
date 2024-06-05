@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/service/auth/auth.service';
   styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent {
+  showPassword: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private toast: ToastrService,
@@ -46,10 +47,14 @@ export class RegistrationComponent {
         .ProceedRegistration(this.registrationForm.value)
         .subscribe(() => {
           this.toast.success('Registration Success.');
-          this.router.navigate(['']);
+          this.router.navigate(['/login']);
         });
     } else {
       this.toast.warning('please enter a valid Data');
     }
+  }
+  
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

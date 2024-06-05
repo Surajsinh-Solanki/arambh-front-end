@@ -30,12 +30,20 @@
           </div>
           <div>
             <label class="input-label">Password</label><br />
-            <input
-              type="text"
-              class="text-input"
-              formControlName="password"
-              required
-            />
+            <div class="d-flex align-items-center position-relative">
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                class="text-input"
+                formControlName="password"
+                required
+              />
+              <i
+                class="fa position-absolute"
+                style="right: 15px"
+                [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+                (click)="togglePasswordVisibility()"
+              ></i>
+            </div>
           </div>
           <div class="remember-block">
             <div class="remember">

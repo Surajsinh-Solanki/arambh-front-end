@@ -13,6 +13,7 @@ import { Login } from 'src/app/shared/interface/user.interface';
 })
 export class LoginComponent {
   rememberMe: boolean = false;
+  showPassword: boolean = false ;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,5 +52,9 @@ export class LoginComponent {
     } else {
       this.toast.warning('please enter a valid Data');
     }
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }

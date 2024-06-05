@@ -57,10 +57,6 @@
     }
   }
 
-  .reviews {
-    color: #f9d71c;
-  }
-
   .box-top {
     display: flex;
     justify-content: space-between;
@@ -75,13 +71,14 @@
 
   .input {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     width: 100%;
   }
 
   .reviewinp {
-    width: 300px;
+    width: 100%;
     height: 70px;
     outline: none;
     border-radius: 5px;
@@ -94,8 +91,10 @@
   }
 
   .stars {
+    cursor: pointer;
     display: flex;
     padding: 0 20px;
+    color: #f9d71c;
   }
 
   .star1,
@@ -135,5 +134,39 @@
     border-radius: 10px;
     border: 1.5px solid #d1d1d1;
     width: 100%;
+  }
+}
+
+.size-select {
+  gap: 5px;
+  cursor: pointer;
+  .select-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: #036bfc solid 1px;
+    border-radius: 50%;
+    &.selected {
+      border: #036bfc solid 3px;
+    }
+  }
+}
+
+.quantity-select {
+  gap: 10px;
+  cursor: pointer;
+  .increment,
+  .decrement {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    background-color: orange;
+    margin: 0 10px;
   }
 }

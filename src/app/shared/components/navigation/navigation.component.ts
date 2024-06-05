@@ -1,6 +1,7 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchTextService } from 'src/app/service/shared/search-text.service';
+import { getFromStorage } from 'src/app/service/storage-service/storage.service';
 
 @Component({
   selector: 'app-navigation',
@@ -11,14 +12,23 @@ export class NavigationComponent {
   isMenuOpen = false;
   searchText: string = '';
   logoutConfirmed: boolean = false;
+  isLoggedIn: boolean = false;
   constructor(
     private searchService: SearchTextService,
     private renderer: Renderer2,
     private el: ElementRef,
-    private router:Router
-  ) {}
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+    private router: Router,
+  ) {
+    this.checkAuthentication();
+  }
+
+  checkAuthentication() {
+    let isUserLoggedIn: string | null = getFromStorage('isUserLoggedIn');
+    if (isUserLoggedIn != null && isUserLoggedIn == 'true') {
+      this.isLoggedIn = true;
+    } else {
+      this.isLoggedIn = false;
+    }
   }
 
   onSearchChange(searchText: string) {

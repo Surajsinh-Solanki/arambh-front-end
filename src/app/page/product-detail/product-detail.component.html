@@ -4,22 +4,34 @@
     <div class="container-fluid">
       <div class="row gx-5">
         <aside class="col-lg-6">
-          <div class="border rounded-4 mb-6   d-flex justify-content-center">
-            <img style="max-width: 100%; max-height: 100vh; margin: auto" class=""
-              src="{{media_url}}{{ product?.imageUrls[0] }}" />
+          <div
+            style="height: 500px"
+            class="border rounded-4 mb-6 d-flex justify-content-center"
+          >
+            <img
+              style="object-fit: contain"
+              class=""
+              src="{{ media_url }}{{ product?.imageUrls[0] }}"
+            />
           </div>
           <div class="d-flex justify-content-center mb-6">
             <div *ngFor="let image of product?.imageUrls">
-              <img width="60" height="60" class="rounded-2" src="{{media_url}}{{ image }}" />
+              <img
+                width="60"
+                height="60"
+                class="rounded-2"
+                src="{{ media_url }}{{ image }}"
+              />
             </div>
           </div>
         </aside>
         <main class="col-lg-6">
           <div class="ps-lg-3">
+            <p class="mb-0">{{ product?.category }}</p>
             <span class="title text-dark h3">
               {{ product?.name }}
             </span>
-            <div class="d-flex flex-row my-3">
+            <div class="d-flex justify-content-between flex-row my-3">
               <div class="text-warning mb-1 me-2">
                 <ng-container *ngFor="let _ of fullStarArray">
                   <i class="fa fa-star"></i>
@@ -32,17 +44,20 @@
                 <span class="ms-1">{{ globalValue }}</span>
               </div>
 
-              <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i></span>
-              <span class="text-success ms-2">In stock</span>
+              <span class="text-success ms-2">
+                <span class="text-muted"
+                  ><i class="fas fa-shopping-basket fa-sm mx-1"></i
+                ></span>
+                In stock</span
+              >
             </div>
             <div class="mb-3">
-              <span class="h5">₹ {{ product?.price || 0 }}</span>
-              <span class="text-muted">/per pice (mrp : ₹<s>{{ product?.mrp || 0 }}</s>)</span>
+              <span class="h5">₹{{ product?.price || 0 }}</span>
+              <span class="text-muted ml-2"
+                ><s>{{ product?.mrp || 0 }}</s></span
+              >
             </div>
 
-            <p>
-              {{ product?.description }}
-            </p>
             <div class="row">
               <dt class="col-3">Type:</dt>
               <dd class="col-9">Regular</dd>
@@ -51,37 +66,63 @@
               <dd class="col-9">Brown</dd>
 
               <dt class="col-3">Material</dt>
-              <dd class="col-9">{{product?.material}}</dd>
+              <dd class="col-9">{{ product?.material }}</dd>
 
               <dt class="col-3">Brand</dt>
               <dd class="col-9">{{ product?.brand }}</dd>
             </div>
             <hr />
+
+            <div>
+              <h4 class="mb-0 text-bold" style="font-weight: 700">
+                About this Item
+              </h4>
+              <p>
+                {{ product?.description }}
+              </p>
+            </div>
+            <hr />
             <div class="row mb-4">
-              <div class="col-md-4 col-6">
+              <div class="col-md-6 col-6">
                 <label class="mb-2">Size : </label>
-                <select class="form-select border border-secondary" [(ngModel)]="selectedSize" name="selectedSize"
-                  style="height: 35px">
-                  <option></option>
-                  <option *ngFor="let ss of product?.sizeStock">
+                <div class="d-flex size-select">
+                  <div
+                    class="select-item"
+                    [class.selected]="selectedSize == ss.size"
+                    *ngFor="let ss of product?.sizeStock"
+                    (click)="selectSize(ss.size)"
+                  >
                     {{ ss.size }}
-                  </option>
-                </select>
+                  </div>
+                </div>
               </div>
               <!-- col.// -->
-              <div class="col-md-4 col-6 mb-3">
+              <div class="col-md-6 col-6 mb-3">
                 <label class="mb-2">Quantity : </label>
 
-                <select class="form-select border border-secondary" style="height: 35px" [(ngModel)]="quantity"
-                  name="quantity">
+                <!-- <select
+                  class="form-select border border-secondary"
+                  style="height: 35px"
+                  [(ngModel)]="quantity"
+                  name="quantity"
+                >
                   <option>0</option>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
-                </select>
+                </select> -->
+                <div class="quantity-select d-flex">
+                  <div class="increment" (click)="decrementQuantity()">-</div>
+                  {{ quantity }}
+                  <div class="decrement" (click)="incrementQuantity()">+</div>
+                </div>
               </div>
             </div>
-            <button class="btn btn-warning btn-lg" (click)="addToCart()" [disabled]="quantity < 1">
+            <button
+              class="btn btn-warning btn-lg"
+              (click)="addToCart()"
+              [disabled]="quantity < 1"
+            >
               Add to Cart
             </button>
           </div>
@@ -90,79 +131,86 @@
     </div>
   </section>
   <div class="main-block">
-    <div class="rating">
-      <div class="reviews">
-        <div class="testimonial-heading">
-          <span>Comments</span>
-          <h4>Clients Says</h4>
-        </div>
-        <div>
-          <div class="container">
-            <div class="reviews">
-              <div class="input-container">
-                <div class="input">
-                  <div class="inputbox">
-                    <textarea type="text" class="reviewinp" placeholder="Write a review" [(ngModel)]="comment"
-                      name="comment"></textarea>
-                  </div>
-                  <div class="stars">
-                    <div class="star1" (click)="rateStar(1)">
-                      <i class="far fa-star" [ngClass]="{ fas: star >= 1 }"></i>
-                    </div>
-                    <div class="star2" (click)="rateStar(2)">
-                      <i class="far fa-star" [ngClass]="{ fas: star >= 2 }"></i>
-                    </div>
-                    <div class="star3" (click)="rateStar(3)">
-                      <i class="far fa-star" [ngClass]="{ fas: star >= 3 }"></i>
-                    </div>
-                    <div class="star4" (click)="rateStar(4)">
-                      <i class="far fa-star" [ngClass]="{ fas: star >= 4 }"></i>
-                    </div>
-                    <div class="star5" (click)="rateStar(5)">
-                      <i class="far fa-star" [ngClass]="{ fas: star >= 5 }"></i>
-                    </div>
-                  </div>
-                  <div class="submitbtn">
-                    <button class="submit" (click)="addReview()">
-                      Submit Review
-                    </button>
-                  </div>
+    <div class="reviews">
+      <div class="testimonial-heading">
+        <span>Comments</span>
+        <h4>Clients Says</h4>
+      </div>
+      <div>
+        <div class="container">
+          <div class="input-container">
+            <div class="input">
+              <div>
+                <textarea
+                  type="text"
+                  class="reviewinp"
+                  placeholder="Write a review"
+                  [(ngModel)]="comment"
+                  name="comment"
+                ></textarea>
+              </div>
+              <div class="stars">
+                <div class="star1" (click)="rateStar(1)">
+                  <i class="far fa-star" [ngClass]="{ fas: star >= 1 }"></i>
+                </div>
+                <div class="star2" (click)="rateStar(2)">
+                  <i class="far fa-star" [ngClass]="{ fas: star >= 2 }"></i>
+                </div>
+                <div class="star3" (click)="rateStar(3)">
+                  <i class="far fa-star" [ngClass]="{ fas: star >= 3 }"></i>
+                </div>
+                <div class="star4" (click)="rateStar(4)">
+                  <i class="far fa-star" [ngClass]="{ fas: star >= 4 }"></i>
+                </div>
+                <div class="star5" (click)="rateStar(5)">
+                  <i class="far fa-star" [ngClass]="{ fas: star >= 5 }"></i>
                 </div>
               </div>
+              <div class="submitbtn">
+                <button class="submit" (click)="addReview()">
+                  Submit Review
+                </button>
+              </div>
             </div>
-            <div class="testimonial-box-container">
-              <div class="testimonial-box" *ngFor="let rev of review">
-                <!--top------------------------->
-                <div class="box-top">
-                  <!--profile----->
-                  <div class="profile">
-                    <!--img---->
-                    <div class="profile-img">
-                      <img
-                        src="https://dev-ms.taskopad.com/uploads/93f4d1a0-a49d-11ee-abe9-c369a2df4928/1703670719418" />
-                    </div>
-                    <!--name-and-username-->
-                    <div class="name-user">
-                      <strong>{{ rev.user.firstName }}
-                        {{ rev.user.lastName }}</strong>
-                    </div>
+          </div>
+          <div class="testimonial-box-container">
+            <div class="testimonial-box" *ngFor="let rev of review">
+              <!--top------------------------->
+              <div class="box-top">
+                <!--profile----->
+                <div class="profile">
+                  <!--img---->
+                  <div class="profile-img">
+                    <img
+                      src="https://dev-ms.taskopad.com/uploads/93f4d1a0-a49d-11ee-abe9-c369a2df4928/1703670719418"
+                    />
                   </div>
-                  <!--reviews------>
-                  <div class="reviews">
-                    <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
-                      <i class="fas fa-star" [ngClass]="{
-                          far: i >= rev.rating,
-                          fas: i < rev.rating
-                        }"></i>
-                    </ng-container>
+                  <!--name-and-username-->
+                  <div class="name-user">
+                    <strong
+                      >{{ rev.user.firstName }} {{ rev.user.lastName }}</strong
+                    >
                   </div>
                 </div>
-                <!--Comments---------------------------------------->
-                <div class="client-comment">
-                  <p>
-                    {{ rev.comment }}
-                  </p>
+                <div>
+                  <ng-container
+                    *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                  >
+                    <i
+                      class="fas fa-star"
+                      [ngClass]="{
+                        far: i >= rev.rating,
+                        fas: i < rev.rating
+                      }"
+                    ></i>
+                  </ng-container>
                 </div>
+              </div>
+              <!--Comments---------------------------------------->
+              <div class="client-comment">
+                <p>
+                  {{ rev.comment }}
+                </p>
               </div>
             </div>
           </div>

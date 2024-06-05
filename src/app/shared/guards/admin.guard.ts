@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { jwtDecode } from 'jwt-decode';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -22,10 +23,16 @@ export class AdminGuard implements CanActivate {
   }
   constructor(private router: Router) {}
   checkLogin(url: string): true | UrlTree {
+    const token = getFromStorage('authorization');
+    let decodedToken: any = '';
+    if (token) {
+      decodedToken = jwtDecode(token);
+    }
     const val = getFromStorage('isUserLoggedIn');
-    const admin = getFromStorage('isAdmin');
-    if (val != null && val == 'true' && admin != null && admin == 'true') {
+    const admin = decodedToken.isAdmin;
+    if (val != null && val == 'true' && admin != null && admin == true) {
       if (url == '/') {
+        console.log('hi');
         setTimeout(() => {
           this.router.parseUrl('/');
         }, 1500);

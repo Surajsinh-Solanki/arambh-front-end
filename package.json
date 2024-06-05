@@ -28,6 +28,7 @@
     "@stripe/stripe-js": "^2.2.0",
     "axios": "^1.6.7",
     "bootstrap": "^4.6.2",
+    "jwt-decode": "^4.0.0",
     "ngx-toastr": "^17.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
