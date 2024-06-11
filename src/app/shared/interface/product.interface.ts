@@ -24,3 +24,22 @@ export interface Cart {
   size?: string;
   product?: Product;
 }
+
+export interface Variant {
+  mrp: number;
+  discounted_price: number;
+  gst: number;
+  size: string;
+  stock: number;
+  color: string;
+}
+
+export interface ProductData {
+  name: string;
+  discription: string;
+  variants: Variant[];
+  category: string;
+  brand: string;
+  material: string;
+  tags: string[];
+}

@@ -1,12 +1,10 @@
 .page {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 5rem;
-  margin: 3rem;
-  border-radius: 0.6rem;
   background: #ffffff;
-  box-shadow: 0 0.8rem 2rem rgba(#5a6181, 0.05);
+  padding: 0;
+  justify-content: flex-end;
+  // box-shadow: 0 0.8rem 2rem rgba(#5a6181, 0.05);
 
   &__numbers,
   &__btn,
@@ -14,22 +12,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0.8rem;
-    font-size: 1.4rem;
+    margin: 0.1rem;
     cursor: pointer;
   }
 
   &__dots {
-    width: 2.6rem;
-    height: 2.6rem;
+    width: 1.6rem;
+    height: 1.6rem;
     color: var(--greyLight);
     cursor: initial;
   }
 
   &__numbers {
-    width: 2.6rem;
-    height: 2.6rem;
-    border-radius: 0.4rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 0.2rem;
 
     &:hover {
       color: var(--primary);

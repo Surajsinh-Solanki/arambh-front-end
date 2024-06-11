@@ -1,0 +1,49 @@
+.cs-input {
+  padding: 30px 80px;
+  border: dashed 2px #3b7ade;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  label {
+    background-color: #3b7ade;
+    padding: 5px 15px;
+    border-radius: 4px;
+    color: #fff;
+  }
+  input {
+    display: none;
+  }
+  img {
+    height: 200px;
+    position: relative;
+  }
+  i {
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+    align-items: center;
+    background-color: #fff;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #ff00006a;
+    color: #ff0000;
+  }
+}
+
+.tag-item {
+  background-color: #eee; /* Set background color for tags */
+  padding: 5px 10px;
+  margin: 5px 5px 0 0; /* Add margin for spacing between tags */
+  border-radius: 3px; /* Add rounded corners */
+  cursor: pointer; /* Make tags clickable for removal */
+  display: inline-block;
+}
+
+.remove-icon {
+  font-size: 14px; /* Adjust font size for remove icon */
+  color: red; /* Set color for remove icon */
+  margin-left: 5px; /* Add margin between tag text and remove icon */
+}

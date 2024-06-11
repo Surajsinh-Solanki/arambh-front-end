@@ -1,0 +1,136 @@
+<div
+  class="sidebar"
+  [ngStyle]="{
+    width: isSidebarOpen ? '250px' : '75px'
+  }"
+>
+  <div class="logo-details">
+    <div
+      class="logo_name"
+      [ngStyle]="{
+        opacity: isSidebarOpen ? 1 : 0
+      }"
+    >
+      SideMenu
+    </div>
+    <ng-template [ngIf]="isSidebarOpen" #closeIcon>
+      <img
+        src="../../../../assets/svg/close.svg"
+        id="btn"
+        class="icon"
+        (click)="toggleSidebar()"
+      />
+    </ng-template>
+
+    <ng-template [ngIf]="!isSidebarOpen" #menuIcon>
+      <img
+        src="../../../../assets/svg/menu.svg"
+        id="btn"
+        class="icon"
+        (click)="toggleSidebar()"
+      />
+    </ng-template>
+  </div>
+  <ul class="nav-list">
+    <li>
+      <img
+        src="../../../../assets/svg/search.svg"
+        (click)="toggleSidebar()"
+        class="search icon"
+      />
+      <input
+        [ngStyle]="{
+          padding: isSidebarOpen ? '0 20px 0 50px' : '',
+          width: isSidebarOpen ? '100%' : '50px'
+        }"
+        type="text"
+        [placeholder]="isSidebarOpen ? 'Search...' : ''"
+      />
+    </li>
+    <li>
+      <a routerLink="dashboard">
+        <img class="icon" src="../../../../assets/svg/grid.svg" />
+        <span
+          class="links_name"
+          [ngStyle]="{
+            opacity: isSidebarOpen ? 1 : 0,
+            'pointer-events': isSidebarOpen ? 'auto' : 'none'
+          }"
+          >Dashboard</span
+        >
+      </a>
+    </li>
+    <li>
+      <a routerLink="users">
+        <img class="icon" src="../../../../assets/svg/user.svg" />
+        <span
+          class="links_name"
+          [ngStyle]="{
+            opacity: isSidebarOpen ? 1 : 0,
+            'pointer-events': isSidebarOpen ? 'auto' : 'none'
+          }"
+          >User</span
+        >
+      </a>
+    </li>
+    <li>
+      <a routerLink="orders">
+        <img class="icon" src="../../../../assets/svg/cart.svg" />
+        <span
+          class="links_name"
+          [ngStyle]="{
+            opacity: isSidebarOpen ? 1 : 0,
+            'pointer-events': isSidebarOpen ? 'auto' : 'none'
+          }"
+          >Order</span
+        >
+      </a>
+    </li>
+    <li>
+      <a routerLink="products">
+        <img class="icon" src="../../../../assets/svg/clothes-shirt.svg" />
+        <span
+          class="links_name"
+          [ngStyle]="{
+            opacity: isSidebarOpen ? 1 : 0,
+            'pointer-events': isSidebarOpen ? 'auto' : 'none'
+          }"
+          >Products</span
+        >
+      </a>
+    </li>
+    <li>
+      <a routerLink="setting">
+        <img class="icon" src="../../../../assets/svg/setting-.svg" />
+        <span
+          class="links_name"
+          [ngStyle]="{
+            opacity: isSidebarOpen ? 1 : 0,
+            'pointer-events': isSidebarOpen ? 'auto' : 'none'
+          }"
+          >Setting</span
+        >
+      </a>
+    </li>
+    <li class="logout">
+      <a
+        routerLink="logout"
+        [ngStyle]="{
+          display: isSidebarOpen ? 'flex' : '',
+          height: isSidebarOpen ? '' : '45px',
+          width: isSidebarOpen ? '' : '45px'
+        }"
+      >
+        <img class="icon" src="../../../../assets/svg/logout-.svg" />
+        <span
+          class="links_name"
+          [ngStyle]="{
+            opacity: isSidebarOpen ? 1 : 0,
+            'pointer-events': isSidebarOpen ? 'auto' : 'none'
+          }"
+          >Logout</span
+        >
+      </a>
+    </li>
+  </ul>
+</div>

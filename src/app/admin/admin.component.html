@@ -1,0 +1,7 @@
+<app-sidebar
+    [isSidebarOpen]="isSidebarOpen"
+    (toogle)="toggleSidebar()"
+></app-sidebar>
+<div [class.open]="isSidebarOpen" class="main">
+    <router-outlet></router-outlet>
+</div>

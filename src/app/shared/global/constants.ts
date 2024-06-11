@@ -15,3 +15,9 @@ export const RAZOR_PAY_CONFIG = {
   RAZOR_PAY_CURRENCY: 'INR',
   RAZOR_PAY_DESCRIPTION: 'Test Payment',
 };
+
+export const SIZES: string[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+export const GST = (discounted_price: number): number => {
+  return discounted_price >= 1000 ? 12 : 5;
+};

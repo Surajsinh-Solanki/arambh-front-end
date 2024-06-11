@@ -1,0 +1,94 @@
+<div class="container-fluid">
+    <div>
+        <h4 class="font-weight-bold">Product Listing</h4>
+    </div>
+    <div class="card p-3">
+        <div class="d-flex justify-content-between mb-3">
+            <input
+                type="search"
+                class="w-25 form-control"
+                placeholder="Search..."
+            />
+            <button class="btn btn-primary" routerLink="add">Add Product</button>
+        </div>
+        <div class="mb-2">
+            <table class="table table-hover">
+                <thead class="table-dark" style="background: #11101d">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Mrp</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">GST</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Material</th>
+                        <th scope="col">sizeStock</th>
+                        <!-- <th scope="col">{{products[0]}}</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products">
+                        <th scope="row"></th>
+                        <td>
+                            <img
+                                [src]="media_url + product.imageUrls[0]"
+                                alt="{{ product.name }}"
+                                width="50"
+                            />
+                        </td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.mrp }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.gst }}</td>
+                        <td>{{ product.brand }}</td>
+                        <td>{{ product.gender }}</td>
+                        <td>
+                            <span
+                                style="
+                                    display: block;
+                                    width: 40px;
+                                    height: 15px;
+                                    border: 2px solid black;
+                                "
+                                [style.background]="product.color"
+                                class="color-box"
+                            ></span>
+                        </td>
+                        <td>{{ product.material }}</td>
+                        <td>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Size</th>
+                                        <th>Stock</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let size of product.sizeStock">
+                                        <td>{{ size.size }}</td>
+                                        <td>{{ size.stock }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-end">
+            <app-pagination
+                [count]="productCount"
+                [currentPage]="currentPage"
+                [itemsPerPage]="itemsPerPage"
+                (pageChange)="onPageChange($event)"
+            ></app-pagination>
+        </div>
+    </div>
+</div>
