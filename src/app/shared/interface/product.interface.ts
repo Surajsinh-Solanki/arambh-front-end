@@ -28,10 +28,9 @@ export interface Cart {
 export interface Variant {
   mrp: number;
   discounted_price: number;
-  gst: number;
+  gst?: number;
   size: string;
   stock: number;
-  color: string;
 }
 
 export interface ProductData {

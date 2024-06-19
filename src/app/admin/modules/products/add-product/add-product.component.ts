@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SIZES } from 'src/app/shared/global/constants';
+import { GST, SIZES } from 'src/app/shared/global/constants';
 import {
   ProductData,
   Variant,
@@ -13,7 +13,7 @@ import {
 })
 export class AddProductComponent {
   productForm: FormGroup;
-  variantForm: FormGroup;
+  // variantForm: FormGroup;
   variants: Variant[] = [];
   tags: string[] = [];
   tagInput: string = '';
@@ -28,13 +28,10 @@ export class AddProductComponent {
       brand: ['', Validators.required],
       material: ['', Validators.required],
       tags: [],
-    });
-    this.variantForm = this.fb.group({
-      mrp: ['', Validators.required],
-      discounted_price: ['', Validators.required],
-      size: ['', Validators.required],
-      stock: ['', Validators.required],
-      color: ['', Validators.required],
+      mrp: ['', Validators.min(1)],
+      discounted_price: ['', Validators.min(1)],
+      size: [''],
+      stock: [''],
     });
   }
 
@@ -63,34 +60,47 @@ export class AddProductComponent {
     const newTag = this.productForm.value.tags.trim();
     if (newTag && !this.tags.includes(newTag)) {
       this.tags.push(newTag);
-      this.productForm.patchValue({ tags: this.tags });
+      this.productForm.patchValue({ tags: '' });
     }
   }
 
   removeTag(tag: string) {
     this.tags = this.tags.filter((t) => t !== tag);
-    this.productForm.patchValue({ tags: this.tags });
   }
 
   addProduct() {
-    this.productForm.value.variants = this.variants;
+    this.productForm.patchValue({ variants: this.variants });
+    this.productForm.patchValue({ tags: this.tags });
     if (this.productForm.valid) {
       const productData = this.productForm.value;
-      productData.tags = this.tags; // Update tags if necessary
       console.log(
-        ' >> AddProductComponent >> addProduct >> productData:',
+        '😊 >> AddProductComponent >> addProduct >> productData:',
         productData,
       );
     }
   }
   addVariant() {
-    if (this.variantForm.valid) {
-      this.variants.push(this.variantForm.value);
-      this.variantForm.reset();
-    }
+    this.variants.push({
+      mrp: this.productForm.controls['mrp'].value,
+      discounted_price: this.productForm.controls['discounted_price'].value,
+      size: this.productForm.controls['size'].value,
+      stock: this.productForm.controls['stock'].value,
+      gst: GST(this.productForm.controls['discounted_price'].value),
+    });
+    this.productForm.patchValue({ mrp: '' });
+    this.productForm.patchValue({ discounted_price: '' });
+    this.productForm.patchValue({ size: '' });
+    this.productForm.patchValue({ stock: '' });
   }
 
   removeVariant(index: number) {
     this.variants.splice(index, 1);
+  }
+
+  onTagInputKeydown(event: any) {
+    event.preventDefault();
+    if (event.key === 'Enter') {
+      this.addTag();
+    }
   }
 }
