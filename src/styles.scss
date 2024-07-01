@@ -1,17 +1,32 @@
 @import 'node_modules/ngx-toastr/toastr-old.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+@import './assets/stylesheets/variable';
+
+html {
+  font-family: 'Inter', sans-serif;
+  font-size: 62.5%;
+  font-style: normal;
+}
 
 html,
 body {
   height: 100%;
 }
+
 body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-size: 1.6rem;
 }
 
-* {
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  text-decoration: none;
+  list-style-type: none;
 }
+
 img {
   max-width: 100%;
 }
@@ -19,6 +34,7 @@ img {
 a {
   text-decoration: none;
   transition: color 0.3s ease;
+  background-color: var(--primary);
 }
 
 /* Remove list styles */
