@@ -25,3 +25,21 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Development server
+Run `ng serve --configuration=development` for a dev server. Navigate to `http://localhost:4200/`.
+
+## Stage server
+Run `ng serve --configuration=stage` for a stage server. Navigate to `http://localhost:4200/`.
+
+## Production server
+Run `ng serve --configuration=production` for a production server. Navigate to `http://localhost:4200/`.
+
+## Development build
+Run `ng build --configuration=development` to build the development project. The build artifacts will be stored in the `dist/` directory.
+
+## Stage build
+Run `ng build --configuration=stage` to build the stage project. The build artifacts will be stored in the `dist/` directory.
+
+## Production build
+Run `ng build --configuration=production` to build the production project. The build artifacts will be stored in the `dist/` directory.
