@@ -1,12 +1,93 @@
 @import 'node_modules/ngx-toastr/toastr-old.css';
+@import './utility';
 
-html,
+// Define Color Variables
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$success-color: #28a745;
+$danger-color: #dc3545;
+$warning-color: #ffc107;
+$info-color: #17a2b8;
+$light-color: #f8f9fa;
+$dark-color: #343a40;
+$text-color: #212529;
+$background-color: #ffffff;
+$border-color: #dee2e6;
+
+// Define Font Variables
+$font-family-base: 'Roboto', sans-serif;
+$font-size-base: 16px;
+$font-size-sm: 14px;
+$font-size-lg: 18px;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+// Define Border Radius Variables
+$border-radius-sm: 0.2rem;
+$border-radius-md: 0.25rem;
+$border-radius-lg: 0.3rem;
+
+// Global Body Styles
 body {
-  height: 100%;
-}
-body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  color: $text-color;
+  background-color: $background-color;
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  padding: 0;
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-bold;
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+
+// Button Styles
+.btn {
+  display: inline-block;
+  font-weight: $font-weight-bold;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  border-radius: $border-radius-md;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &-primary {
+    background-color: $primary-color;
+    color: $light-color;
+    border-color: $primary-color;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+      border-color: darken($primary-color, 10%);
+    }
+  }
+
+  &-secondary {
+    background-color: $secondary-color;
+    color: $light-color;
+    border-color: $secondary-color;
+
+    &:hover {
+      background-color: darken($secondary-color, 10%);
+      border-color: darken($secondary-color, 10%);
+    }
+  }
 }
 
 * {

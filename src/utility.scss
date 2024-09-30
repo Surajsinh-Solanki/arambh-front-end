@@ -1,0 +1,53 @@
+// Define Breakpoints for Responsiveness
+$breakpoint-xs: 0px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Define Spacing Variables
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Responsive Utility Classes
+.mt-xs { margin-top: $spacing-xs; }
+.mt-sm { margin-top: $spacing-sm; }
+.mt-md { margin-top: $spacing-md; }
+.mt-lg { margin-top: $spacing-lg; }
+.mt-xl { margin-top: $spacing-xl; }
+
+.mb-xs { margin-bottom: $spacing-xs; }
+.mb-sm { margin-bottom: $spacing-sm; }
+.mb-md { margin-bottom: $spacing-md; }
+.mb-lg { margin-bottom: $spacing-lg; }
+.mb-xl { margin-bottom: $spacing-xl; }
+
+.p-xs { padding: $spacing-xs; }
+.p-sm { padding: $spacing-sm; }
+.p-md { padding: $spacing-md; }
+.p-lg { padding: $spacing-lg; }
+.p-xl { padding: $spacing-xl; }
+
+// Media Queries for Additional Responsive Utilities
+@media (max-width: $breakpoint-sm) {
+  .d-sm-block { display: block !important; }
+  .d-sm-none { display: none !important; }
+}
+
+@media (min-width: $breakpoint-md) {
+  .d-md-block { display: block !important; }
+  .d-md-none { display: none !important; }
+}
+
+@media (min-width: $breakpoint-lg) {
+  .d-lg-block { display: block !important; }
+  .d-lg-none { display: none !important; }
+}
+
+@media (min-width: $breakpoint-xl) {
+  .d-xl-block { display: block !important; }
+  .d-xl-none { display: none !important; }
+}

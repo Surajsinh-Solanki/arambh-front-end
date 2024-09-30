@@ -21,7 +21,7 @@ export class ProductsComponent {
   color: any;
   brand: any;
   minPrice: number = 0;
-  maxPrice: number = 5000;
+  maxPrice: number = 10000;
   selectedColors: string[] = [];
   selectedBrands: string[] = [];
   selectedCategory: string[] = [];
@@ -37,7 +37,7 @@ export class ProductsComponent {
   ) {}
 
   async ngOnInit() {
-    const query = Utils.getAllQueryParameters();
+    // const query = Utils.getAllQueryParameters();
     // this.getAllProducts(query);
     this.getCategoryCount();
     this.getColorCount();
@@ -72,6 +72,10 @@ export class ProductsComponent {
         }
       },
     );
+  }
+
+  onSortChange() {
+    this.filter();
   }
 
   async getCategoryCount() {
