@@ -107,3 +107,24 @@ ul,
 ol {
   list-style: none;
 }
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+/* Cursor utilities */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}

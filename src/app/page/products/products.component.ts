@@ -4,7 +4,6 @@ import { ToastrService } from 'ngx-toastr';
 import { ProductService } from 'src/app/service/product/product.service';
 import { SearchTextService } from 'src/app/service/shared/search-text.service';
 import { colorName } from 'src/app/shared/global/color-name';
-import { Utils } from 'src/app/shared/global/utils';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -28,12 +27,13 @@ export class ProductsComponent {
   sortBy: string = '{"createdAt" : -1}';
   currentPage: number = 1;
   itemsPerPage: number = 12;
+  showFilter: boolean = false;
 
   constructor(
-    private service: ProductService,
-    private toast: ToastrService,
-    private searchService: SearchTextService,
-    private route: ActivatedRoute,
+    private readonly service: ProductService,
+    private readonly toast: ToastrService,
+    private readonly searchService: SearchTextService,
+    private readonly route: ActivatedRoute,
   ) {}
 
   async ngOnInit() {
@@ -129,7 +129,7 @@ export class ProductsComponent {
     );
   }
 
-  toggleBrandSelection(key: string, value: string) {
+  toggleSelection(key: string, value: string) {
     if (key === 'brand') {
       if (this.selectedBrands.includes(value)) {
         this.selectedBrands = this.selectedBrands.filter((b) => b !== value);
@@ -182,5 +182,14 @@ export class ProductsComponent {
   async onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;
     await this.getAllProducts(this.query);
+  }
+
+  toggleFilter() {
+    console.log('😊 >> ProductsComponent >> toggleFilter >> this.showFilter:', this.showFilter);
+    this.showFilter = !this.showFilter;
+  }
+
+  closeFilter() {
+    this.showFilter = false;
   }
 }

@@ -2,7 +2,10 @@
 <router-outlet> </router-outlet>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3 pt-4 filter-container">
+        <div
+            class="col-3 pt-4 filter-container"
+            [ngClass]="showFilter ? 'show' : 'hide'"
+        >
             <div class="filter">
                 <h2>Category</h2>
                 <div class="filter-category">
@@ -12,7 +15,7 @@
                                 type="checkbox"
                                 [ngModel]="selectedCategory.includes(cat._id)"
                                 (ngModelChange)="
-                                    toggleBrandSelection('category', cat._id)
+                                    toggleSelection('category', cat._id)
                                 "
                                 [value]="cat._id"
                                 id="{{ cat._id }}"
@@ -56,7 +59,7 @@
                                     type="checkbox"
                                     [ngModel]="selectedBrands.includes(col._id)"
                                     (ngModelChange)="
-                                        toggleBrandSelection('color', col._id)
+                                        toggleSelection('color', col._id)
                                     "
                                     [value]="col._id"
                                     id="{{ col._id }}"
@@ -80,7 +83,7 @@
                                     type="checkbox"
                                     [ngModel]="selectedBrands.includes(brand)"
                                     (ngModelChange)="
-                                        toggleBrandSelection('brand', brand)
+                                        toggleSelection('brand', brand)
                                     "
                                     [value]="brand"
                                     id="{{ brand }}"
@@ -103,7 +106,7 @@
                         style="width: 1.75rem; height: 1.75rem"
                     />
                 </div>
-                <div class="filter-icon">
+                <div class="filter-icon" (click)="toggleFilter()">
                     <img
                         src="assets/svg/filter.svg"
                         alt="menu"
