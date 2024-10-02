@@ -29,6 +29,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Development server
 Run `ng serve --configuration=development` for a dev server. Navigate to `http://localhost:4200/`.
 
+## Development server
+Run `ng serve --configuration=local` for a dev server. Navigate to `http://localhost:4200/`.
+
 ## Stage server
 Run `ng serve --configuration=stage` for a stage server. Navigate to `http://localhost:4200/`.
 
